@@ -1,0 +1,35 @@
+<%- include ('include/header'); %>
+<%- include ('include/navigation_bar'); %>
+
+<div id="first-div" class="container">
+   <!-- put body here -->
+	<div class="index-body container">
+		<div class="container">
+			<% if (comment) { %>
+				<div class="card-header">Update Comment</div>
+
+				<form action="/comment/update/<%= comment.id %>" method="post">
+					<div class="text-area">
+						<textarea name="update_comment_content" id="update_comment_content"
+							class="p-1 md-textarea form-control rounded-0" rows="3" placeholder="article body.."
+							value=""><%= comment.text %></textarea>
+
+						<br>
+						<button name="update_comment_submit_button" type="submit" class="btn btn-success btn-block" value="update_comment">UPDATE COMMENT</button>
+					</div>
+				</form>
+			<% } %>
+		</div>
+	</div>
+
+	<!-- include tinymce here -->
+	<!-- include ('include/tinymce'); -->
+	<!-- <script>
+		tinymce.init({
+			selector: '#update_comment_content'
+		});
+	</script> -->
+</div>
+
+<%- include ('include/footer_section'); %> 
+<%- include ('include/footer'); %>

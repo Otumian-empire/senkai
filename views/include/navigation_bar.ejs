@@ -1,0 +1,79 @@
+<!-- we add a notification div -->
+<!-- notification fixed-top -->
+<!-- nav starts here -->
+<div
+  id="navigation-bar"
+  class="
+    navigation-bar
+    container-fluid
+    col-sm-12 col-md-12 col-lg-12
+    navbar navbar-expand-lg
+    box
+    text-capitalize
+  "
+>
+  <!-- logo -->
+  <div class="col-sm-1 col-md-1 col-lg-1 mx-auto">
+    <a class="navbar-brand col-sm-12 col-md-12 col-lg-12" href="/">
+      <img
+        src="/assets/img/24pill-code-blue.png"
+        alt="logo-brand"
+        width="40"
+        height="30"
+      />
+
+      <!-- <img src="https://avatars3.githubusercontent.com/u/31062978?s=460&u=33d1484fcc3af0c7453c29cb7fbaaaeb179acc8a&v=4" 
+                alt="logo-brand" width="40" height="30">-->
+    </a>
+  </div>
+
+  <!-- nav links -->
+  <div class="col-sm-2 col-md-2 col-lg-2 mx-auto">
+    <a class="btn btn-sm btn-outline-primary" href="/">Recent</a>
+    <a class="btn btn-sm btn-outline-primary" href="/article">Articles</a>
+  </div>
+
+  <!-- search bar -->
+  <div class="input-group col-sm-6 col-md-6 col-lg-6">
+    <form action="" method="get" class="form-inline col-sm col-md col-lg">
+      <input
+        class="form-control-sm border-primary col "
+        type="search"
+        placeholder="search by title, tag and or email"
+        id="example-search-input"
+        name="search_query"
+      />
+      <span class="input-group-append">
+        <button
+          class="btn btn-sm btn-outline-primary border-left-0 border"
+          type="submit"
+          name="search_button"
+        >
+          <i class="fa fa-search"></i>
+        </button>
+      </span>
+    </form>
+  </div>
+
+  <!-- write article, logout, user profile -->
+  <div class="col-sm-3 col-md-3 col-lg-3 mx-auto">
+    <!-- check if there is session -->
+    <% if (session.email && session.token) { %>
+      <a class="btn btn-sm btn-outline-primary" 
+        href="/setting">My profile</a>
+
+      <a class="btn btn-sm btn-outline-primary" 
+        href="/article/create">write article</a>
+
+      <a class="btn btn-sm btn-outline-primary" 
+        href="/account/logout">Log out</a>
+    <% } else { %>
+      <a class="btn btn-sm btn-outline-primary" 
+        href="/account/signup">Sign up</a>
+
+      <a class="btn btn-sm btn-outline-primary" 
+        href="/account/login">Log in</a>
+    <% } %>
+  </div>
+</div>
+<!-- navigation bar ends here -->

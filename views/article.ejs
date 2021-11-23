@@ -1,0 +1,126 @@
+<%- include ('include/header'); %>
+<%- include ('include/navigation_bar'); %>
+
+<div id="first-div" class="container">
+  <!-- put body here -->
+  <div class="index-body container">
+    <div class="container">
+      <% if (article) { %>
+        <!-- post -->
+        <div class="article">
+          <!-- title -->
+          <h2><%= article.title %></h2>
+          <% if (session.token && (session.email === article.email)) { %>
+            <span class="mr-2">
+              <a href="/article/update/<%= article.id %>"
+                class="btn btn-sm btn-success">UPDATE</a>
+            </span>
+
+            <span class="mr-2">
+              <a href="/article/delete/<%= article.id %>"
+                class="btn btn-sm btn-danger">DELETE</a>
+            </span>
+          <% } %>
+
+          <!-- date and author's email-->
+          <i class="fa fa-calendar"></i>
+          <span><%= article.date %></span>
+          <i class="fa fa-user"></i>
+          <span><%= article.author %></span>
+          <br>
+          <hr>
+
+          <!-- content -->
+          <div><%= article.content %></div>
+        </div>
+
+        <br><br>
+
+        <!-- check session here -->
+        <!-- comment -->
+        <% if (!session.token || !session.email) { %>
+          <div class="card card-login mx-auto mt-1">
+            <div class="card-header text-center text-capitalize">
+              You can <a href="/account/login/"
+              class="btn btn-sm btn-primary">Login</a> here to add a comment!!
+            </div>
+          </div>
+        <% } else { %>
+          <div class="text-area">
+            <div class="card-header">Add Comment</div>
+
+            <form action="/comment/write/<%= article.id %>" method="post">
+              <textarea
+                class="comment-box p-1 md-textarea form-control rounded-0"
+                placeholder="Place your comments here" type="textarea" id="comment-box"
+                name="comment_box"></textarea>
+              <br>
+
+              <div class="input-group">
+                <button class="btn btn-success btn-block" id="add-comment-btn"
+                  name="add_comment_btn" type="submit"
+                  value="add_comment">ADD</button>
+              </div>
+            </form>
+          </div>
+
+          <!-- read comments from db on the page -->
+          <!-- comment -->
+          <!-- comment_id, post_id, comment_text, comment_date, user_email -->
+          <div class="comments article">
+            <ul class="comments-list">
+              <% if (comments) { %>
+                <% comments.forEach(function(comment) {  %>
+                  <li class='comments-list-item p-1 m-2'>
+                    <div>
+                      <% if (session.token && (session.email == comment.email)) { %>
+                        <span>
+                          <!-- edit comment -->
+                          <span class='mr-2'><a href='/comment/update/<%= comment.id %>'
+                              class="btn btn-sm btn-primary">EDIT
+                            </a></span>
+
+                          <!-- delete comment -->
+                          <span class='mr-2'><a href='/comment/delete/<%= comment.id %>' class="btn btn-sm btn-danger">
+                              DELETE </a></span>
+                        </span>
+                      <% } %>
+
+                      <!-- comment_date -->
+                      <i class="fa fa-calendar"></i>
+                      <span class=''><%= comment.date %></span>
+
+                      <!-- user_email -->
+                      <i class="fa fa-user"></i>
+                      <span class='mr-2'><%= comment.email %></span>
+
+                      <!-- comment_text -->
+                      <p><%=  comment.text %></p>
+                      <span></span>
+
+                    </div>
+                  </li>
+                <% }) %>
+                <br>
+                <div class="clearfix"></div>
+
+              <% } %>
+            </ul>
+          </div>
+        <% } %>
+      <% } %>
+    </div>
+  </div>
+</div>
+
+<!-- include tinymce here -->
+<!--  include ('include/tinymce'); 
+
+<script>
+	tinymce.init({
+		selector: '#comment-box'
+	});
+</script> -->
+
+<%- include ('include/footer_section'); %>
+<%- include ('include/footer'); %>

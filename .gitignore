@@ -102,3 +102,10 @@ dist
 
 # TernJS port file
 .tern-port
+
+# app
+pill_code_db.sql
+package-lock.json
+.vscode
+.husky
+REFERENCE.md

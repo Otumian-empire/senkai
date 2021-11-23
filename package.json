@@ -1,0 +1,60 @@
+{
+  "name": "senkai",
+  "version": "1.0.0",
+  "description": "Senkai is just another 24pill-code. This is the node/js version of the 24pill-code project. We have in php and python/flask",
+  "author": "popecan1000@gmail.com",
+  "license": "MIT",
+  "main": "app.js",
+  "scripts": {
+    "dev": "nodemon app.js",
+    "start": "node app.js",
+    "restart": "node app.js",
+    "install": "npm install",
+    "husky:init": "npx husky-init && npm",
+    "prettier": "npx prettier --write config/ controllers/ routes/ schemas/ utils/ app.js",
+    "lint:ejs": "npx ejslint views",
+    "lint:js": "eslint config/ controllers/ routes/ schemas/ utils/ --ext .js && eslint app.js",
+    "lint:js:fix": "npm run lint:js -- --fix",
+    "prepare": "npx husky install"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Otumian-empire/senkai.git"
+  },
+  "keywords": [
+    "senkai",
+    "blog",
+    "site",
+    "24pill-code"
+  ],
+  "bugs": {
+    "url": "https://github.com/Otumian-empire/senkai/issues"
+  },
+  "homepage": "https://github.com/Otumian-empire/senkai#readme",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "connect-mongodb-session": "^3.1.1",
+    "cors": "^2.8.5",
+    "ejs": "^3.1.6",
+    "express": "^4.17.1",
+    "express-session": "^1.17.2",
+    "joi": "^17.4.2",
+    "joi-password": "^1.6.0",
+    "mongoose": "^6.0.12",
+    "morgan": "^1.10.0",
+    "morgan-json": "^1.1.0",
+    "winston": "^3.3.3"
+  },
+  "devDependencies": {
+    "dotenv": "^10.0.0",
+    "eslint": "^7.32.0",
+    "eslint-config-standard": "^16.0.3",
+    "eslint-plugin-import": "^2.25.3",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^5.1.1",
+    "husky": "^7.0.0",
+    "lint-staged": "^12.0.3",
+    "nodemon": "^2.0.15",
+    "prettier": "^2.4.1"
+  }
+}

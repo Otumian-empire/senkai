@@ -1,0 +1,30 @@
+.container, #navigation-bar  {
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    padding: 20px;
+}
+
+#first-div {
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+footer {
+    margin-top: 15px;
+}
+
+.footer-bottom {
+    border-top: 1px grey solid;
+    width: 80%;
+    margin: 20px auto 10px auto;
+    padding: 10px;
+}
+
+li {
+    list-style-type: none;
+}
+
+#footer-img {
+    /* border-bottom: 1px solid #000; */
+    /* border-radius: 50%; */
+}
