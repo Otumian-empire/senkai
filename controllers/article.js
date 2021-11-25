@@ -49,7 +49,7 @@ module.exports = {
     const article = [];
     const comments = [];
 
-    if (req.session && req.session.user) {
+    if (req.session.user.email && req.session.user.token) {
       session.email = req.session.user.email;
       session.token = req.session.user._id;
     }
@@ -65,7 +65,7 @@ module.exports = {
     const session = defaultSession;
     const article = [];
 
-    if (req.session && req.session.user) {
+    if (req.session.user.email && req.session.user.token) {
       session.email = req.session.user.email;
       session.token = req.session.user._id;
     }

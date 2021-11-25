@@ -5,7 +5,6 @@ const schemas = {
   signupRequestBody: Joi.object().keys({
     first_name: Joi.string().min(2).max(20).trim().required(),
     last_name: Joi.string().min(2).max(20).trim().required(),
-    bio: Joi.string().trim(),
     email: Joi.string().trim().email().required(),
     password: JoiPassword.string()
       .min(8)
@@ -24,7 +23,8 @@ const schemas = {
       .minOfUppercase(1)
       .minOfNumeric(1)
       .noWhiteSpaces()
-      .required()
+      .required(),
+    bio: Joi.string().trim()
   }),
   loginRequestBody: Joi.object().keys({
     email: Joi.string().trim().email().required(),

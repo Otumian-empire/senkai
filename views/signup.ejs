@@ -9,7 +9,7 @@
 
 			<div class="card-body">
 
-				<form method="POST" action="" class="">
+				<form method="POST" action="" class="" id="signup_form">
 					<div class="form-group">
 						<div class="form-row">
 
@@ -54,7 +54,8 @@
 								class="form-control" 
 								id="email" name="email"
 								placeholder="Name@example.com"
-								value="" />
+								value=""
+								autocomplete="email" />
 							<label for="email">Email address</label>
 						</div>
 					</div>
@@ -68,7 +69,8 @@
 										class="form-control" 	
 										id="password" 
 										name="password"
-										placeholder="Password">
+										placeholder="Password"
+										autocomplete="new-password">
 									<label for="password" 	
 										class="text-capitalize">Password</label>
 								</div>
@@ -81,7 +83,8 @@
 										class="form-control" 
 										id="confirm_password"
 										name="confirm_password" 
-										placeholder="Re-enter password">
+										placeholder="Re-enter password"
+										autocomplete="new-password">
 									<label for="confirm_password" 	
 										class="text-capitalize">
 										Confirm password</label>

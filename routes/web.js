@@ -1,7 +1,11 @@
 const router = require("express").Router();
 
-const { loginPageRenderer, logoutReDirecter, signupPageRenderer } =
-  require("../controllers").accountController;
+const {
+  loginPageRenderer,
+  logoutReDirecter,
+  signupPageRenderer,
+  authenticateSession
+} = require("../controllers").accountController;
 
 const {
   indexPageRenderer,
@@ -69,14 +73,14 @@ router.get("/setting/forget_password", (req, res) => {
 });
 
 // ########################## ACCOUNT PAGES ##########################
-// signup page
-router.get("/account/signup", signupPageRenderer);
+// signup page: signupPageRenderer
+router.get("/account/signup", authenticateSession, signupPageRenderer);
 
 // login page: loginPageRenderer
-router.get("/account/login", loginPageRenderer);
+router.get("/account/login", authenticateSession, loginPageRenderer);
 
 // logout: logoutReDirecter
-router.get("/account/logout", logoutReDirecter);
+router.get("/account/logout", authenticateSession, logoutReDirecter);
 
 // ########################## ARTICLE PAGES ##########################
 // article page: readManyArticleRenderer

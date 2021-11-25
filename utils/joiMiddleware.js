@@ -12,9 +12,7 @@ module.exports = (schema, property = "body") => {
     if (valid) {
       return next();
     } else {
-      const message = error.details
-        .map(({ message, context }) => `${context.key} ${message}`)
-        .join(",");
+      const message = error.details.map((err) => err.message).join(",");
 
       return res.status(200).json({ success: false, message: message });
     }

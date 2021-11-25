@@ -9,7 +9,7 @@
       <div class="card-header">Login</div>
 
       <div class="card-body">
-        <form method="post" action="" class="">
+        <form method="post" id="login_form" action="" class="">
           <!-- email -->
           <div class="form-group">
             <div class="form-label-group">
@@ -17,7 +17,7 @@
                 type="email"
                 class="form-control"
                 id="email"
-                name="login_email"
+                name="email"
                 placeholder="Name@example.com"
                 value="<%= session.email %>"
                 autofocus
@@ -33,7 +33,7 @@
                 type="password"
                 class="form-control"
                 id="password"
-                name="login_password"
+                name="password"
                 placeholder="Password"
               />
               <label for="password" class="text-capitalize">Password</label>

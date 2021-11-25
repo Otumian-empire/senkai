@@ -1,10 +1,9 @@
 const router = require("express").Router();
-const bcrypt = require("bcrypt");
 
 const joiMiddleware = require("../utils/joiMiddleware");
 const joiSchemas = require("../utils/joiSchemas");
 
-const User = require("../schemas").User;
+const { signupProcessor, loginProcessor } = require("../controllers/account");
 
 // ########################## SETTING PAGES ##########################
 // setting routes
@@ -57,152 +56,18 @@ router.put("/comment/:comment_id", (req, res) => {
 });
 
 // ########################## ACCOUNT PAGES ##########################
-// signup routes
+// signup routes: signupProcessor
 router.post(
   "/account/signup",
   joiMiddleware(joiSchemas.signupRequestBody),
-  (req, res) => {
-    const firstName = req.body.first_name;
-    const lastName = req.body.last_name;
-    const email = req.body.email;
-    const bio = req.body.bio;
-    const password = req.body.password;
-    const confirmPassword = req.body.confirm_password;
-
-    if (password !== confirmPassword) {
-      return res.json({
-        success: false,
-        message: "passwords do not match"
-      });
-    }
-
-    User.findOne({
-      email
-    })
-      .then((user) => {
-        if (user) {
-          return res.json({
-            success: false,
-            message: "Kindly login, email already exists"
-          });
-        }
-
-        bcrypt.hash(password, 12, (err, hash) => {
-          if (err) {
-            return res.status(200).json({
-              success: false,
-              message: "An error occurred"
-            });
-          }
-
-          User.create({
-            firstName,
-            lastName,
-            email,
-            bio,
-            password: hash
-          })
-            .then((newUser) => {
-              if (!newUser) {
-                return res.json({
-                  success: false,
-                  message: "Signup unsuccessful"
-                });
-              }
-
-              req.session.user = {
-                email: newUser.email,
-                token: newUser._id.toString()
-              };
-
-              req.session.save((err) => {
-                if (err) {
-                  return res.status(200).json({
-                    success: false,
-                    message: "An error occurred"
-                  });
-                }
-
-                return res.json({
-                  success: true,
-                  message: "Signup successful"
-                });
-              });
-            })
-            .catch(() => {
-              return res.status(200).json({
-                success: false,
-                message: "An error occurred"
-              });
-            });
-        });
-      })
-      .catch(() => {
-        return res.status(200).json({
-          success: false,
-          message: "An error occurred"
-        });
-      });
-  }
+  signupProcessor
 );
-// login route:
+
+// login route: loginProcessor
 router.post(
   "/account/login",
   joiMiddleware(joiSchemas.loginRequestBody),
-  (req, res) => {
-    const email = req.body.email;
-    const password = req.body.password;
-
-    User.findOne({
-      email
-    })
-      .then((user) => {
-        if (!user) {
-          return res.json({
-            success: false,
-            message: "Kindly signup"
-          });
-        }
-
-        bcrypt.compare(password, user.password, (err, match) => {
-          if (err) {
-            return res.status(200).json({
-              success: false,
-              message: "An error Occurred"
-            });
-          }
-
-          if (!match) {
-            return res.status(200).json({
-              success: false,
-              message: "Invalid login credentials"
-            });
-          }
-
-          req.session.user = { email: user.email, token: user._id.toString() };
-
-          req.session.save((err) => {
-            if (err) {
-              return res.status(200).json({
-                success: false,
-                message: "An error occurred"
-              });
-            }
-
-            return res.json({
-              success: true,
-              message: "login successful"
-            });
-          });
-        });
-      })
-      .catch(() => {
-        return res.status(200).json({
-          success: false,
-          message: "An error occurred"
-        });
-      });
-  }
+  loginProcessor
 );
 
 router.delete("/account/delete/:email", (req, res) => {

@@ -4,6 +4,7 @@ module.exports = {
     es2021: true,
     node: true,
     es6: true,
+    browser: true,
   },
   extends: ["standard"],
   parserOptions: {

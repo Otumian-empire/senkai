@@ -78,8 +78,8 @@ mongoose
   })
   .then(() => {
     app.listen(port, () => {
-      console.log("mongodb connected");
-      console.log(`listening on port ${port}`);
+      console.log(`[${new Date()}] :: mongodb connected`);
+      console.log(`[${new Date()}] :: listening on port ${port}`);
     });
   })
   .catch((err) => console.log(err));

@@ -34,7 +34,7 @@ const sessionConfig = ({ uri, secret, isProdServer, collection }) => {
       }
     ),
     resave: false,
-    saveUninitialized: true
+    saveUninitialized: false
   });
 };
 
