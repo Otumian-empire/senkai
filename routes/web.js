@@ -3,9 +3,13 @@ const router = require("express").Router();
 const {
   loginPageRenderer,
   logoutReDirecter,
-  signupPageRenderer,
-  authenticateSession
+  signupPageRenderer
 } = require("../controllers").accountController;
+
+const {
+  authSessionOrRedirect,
+  authSessionThenSetSession,
+} = require("../controllers").authMiddleware
 
 const {
   indexPageRenderer,
@@ -30,15 +34,15 @@ const defaultSession = require("../utils/constants").DEFAULT_SESSION;
 // TODO: add pagination to reading all articles, read 5 at a time
 // TODO: check whether a user object is set on the session object
 // then assign the the user email and _id as token to the session
-router.get("/", indexPageRenderer);
+router.get("/", authSessionThenSetSession, indexPageRenderer);
 
 // about page: aboutPageRenderer
-router.get("/about", aboutPageRenderer);
+router.get("/about", authSessionThenSetSession, aboutPageRenderer);
 
 // contact page
 // TODO: create a model/schema for the contact me
 // look on the contact page to see which fields are needed
-router.get("/contact", contactPageRenderer);
+router.get("/contact", authSessionThenSetSession, contactPageRenderer);
 
 // ########################## SETTING PAGES ##########################
 // user profile page
@@ -74,25 +78,42 @@ router.get("/setting/forget_password", (req, res) => {
 
 // ########################## ACCOUNT PAGES ##########################
 // signup page: signupPageRenderer
-router.get("/account/signup", authenticateSession, signupPageRenderer);
+router.get(
+  "/account/signup",
+  authSessionOrRedirect,
+  signupPageRenderer
+);
 
 // login page: loginPageRenderer
-router.get("/account/login", authenticateSession, loginPageRenderer);
+router.get(
+  "/account/login",
+  authSessionOrRedirect,
+  loginPageRenderer
+);
 
 // logout: logoutReDirecter
-router.get("/account/logout", authenticateSession, logoutReDirecter);
+router.get("/account/logout", logoutReDirecter);
 
 // ########################## ARTICLE PAGES ##########################
 // article page: readManyArticleRenderer
 // TODO: read all articles, read 10 at a time, do it in the
 // articleCollectionController
 // TODO: look into reload on scroll functionality
-router.get("/article", readManyArticleRenderer);
+router.get(
+  "/article",
+  authSessionThenSetSession,
+  readManyArticleRenderer
+);
 
 // create article page: createArticlePageRenderer
 // TODO: on success, redirect to article page with this articles id
 // do it with jquery
-router.get("/article/create", createArticlePageRenderer);
+router.get(
+  "/article/create",
+  // authSessionOrRedirect,
+  authSessionThenSetSession,
+  createArticlePageRenderer
+);
 
 // read article by id page: readOneArticlePageRenderer
 // TODO: read article by id
@@ -101,10 +122,18 @@ router.get("/article/:article_id", readOneArticlePageRenderer);
 
 // update article page: updateArticlePageRenderer
 // TODO: read article by id and pass it to the said view
-router.get("/article/update/:article_id", updateArticlePageRenderer);
+router.get(
+  "/article/update/:article_id",
+  authSessionThenSetSession,
+  updateArticlePageRenderer
+);
 
 // ########################## COMMENT PAGES ##########################
 // update comment page: updateCommentPageRenderer
-router.get("/comment/update/:comment_id", updateCommentPageRenderer);
+router.get(
+  "/comment/update/:comment_id", 
+  authSessionThenSetSession, 
+  updateCommentPageRenderer
+);
 
 module.exports = router;

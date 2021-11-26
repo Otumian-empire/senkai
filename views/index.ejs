@@ -5,6 +5,8 @@
   <!-- put body here -->
   <div class="index-body container">
     <!-- check session here -->
+    <p>email: <%=session.email %></p>
+    <p>token: <%=session.token %></p>
     <% if (!session.token || !session.email) { %>
       <div class="card card-login mx-auto mt-1">
         <div class="card-header text-center text-capitalize">

@@ -6,5 +6,6 @@ module.exports = {
   PORT: process.env.port || 3000,
   APP_NAME: process.env.APP_NAME,
   SESSION_STORE_COLLECTION_NAME: process.env.SESSION_STORE_COLLECTION_NAME,
-  SESSION_SECRET: process.env.SESSION_SECRET
+  SESSION_SECRET: process.env.SESSION_SECRET,
+  ROUNDS: parseInt(process.env.ROUNDS) || 12
 };

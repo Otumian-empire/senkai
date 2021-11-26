@@ -1,15 +1,11 @@
 const appName = require("../config/config").APP_NAME;
-const defaultSession = require("../utils/constants").DEFAULT_SESSION;
 
 module.exports = {
   indexPageRenderer: (req, res) => {
-    const session = defaultSession;
-    const articles = [];
+    const session = req.session_
+    delete req.session_
 
-    if (req.session && req.session.user) {
-      session.email = req.session.user.email;
-      session.token = req.session.user._id;
-    }
+    const articles = [];
 
     return res.render("index", {
       session,
@@ -18,13 +14,10 @@ module.exports = {
     });
   },
   readManyArticleRenderer: (req, res) => {
-    const session = defaultSession;
-    const articles = [];
+    const session = req.session_
+    delete req.session_
 
-    if (req.session && req.session.user) {
-      session.email = req.session.user.email;
-      session.token = req.session.user._id;
-    }
+    const articles = [];
 
     return res.render("all_articles", {
       session,
@@ -33,26 +26,21 @@ module.exports = {
     });
   },
   createArticlePageRenderer: (req, res) => {
-    const session = defaultSession;
-
-    if (!req.session || !req.session.user) {
-      return res.redirect("/");
+    if (!req.session_) {
+      return res.redirect("/account/login")
     }
 
-    session.email = req.session.user.email;
-    session.token = req.session.user._id;
+    const session = req.session_
+    delete req.session_
 
     return res.render("create_article", { session, appName });
   },
   readOneArticlePageRenderer: (req, res) => {
-    const session = defaultSession;
+    const session = req.session_
+    delete req.session_
+
     const article = [];
     const comments = [];
-
-    if (req.session.user.email && req.session.user.token) {
-      session.email = req.session.user.email;
-      session.token = req.session.user._id;
-    }
 
     return res.render("article", {
       session,
@@ -62,13 +50,10 @@ module.exports = {
     });
   },
   updateArticlePageRenderer: (req, res) => {
-    const session = defaultSession;
-    const article = [];
+    const session = req.session_
+    delete req.session_
 
-    if (req.session.user.email && req.session.user.token) {
-      session.email = req.session.user.email;
-      session.token = req.session.user._id;
-    }
+    const article = [];
 
     return res.render("update_article", {
       session,

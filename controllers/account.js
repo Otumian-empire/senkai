@@ -1,42 +1,41 @@
-const appName = require("../config/config").APP_NAME;
-const defaultSession = require("../utils/constants").DEFAULT_SESSION;
-const User = require("../schemas").User;
 const bcrypt = require("bcrypt");
 
+const appName = require("../config/config").APP_NAME;
+const rounds = require("../config/config").ROUNDS
+const defaultSession = require("../utils/constants").DEFAULT_SESSION;
+
+const User = require("../schemas").User;
+
 module.exports = {
-  authenticateSession: (req, res, next) => {
-    const authUser = { ...req.session.user };
 
-    if (authUser && authUser.email && authUser.token) {
-      return res.redirect("/");
-    }
-
-    next();
-  },
   logoutReDirecter: (req, res) => {
     const authUser = { ...req.session.user };
-
-    const email = authUser ? authUser.email : "";
+    const email = (authUser && "email" in authUser) ? authUser.email : "";
 
     const redirectUrl = email
       ? `/account/login?email=${email}`
       : "/account/login";
 
     if (authUser && authUser.email && authUser.token) {
-      delete req.session.user;
+      delete req.session;
     }
 
     return res.redirect(redirectUrl);
   },
   loginPageRenderer: (req, res) => {
     const session = defaultSession;
+    const email = req.query.email
+
+    if (email) {
+      session.email = email
+    }
 
     return res.render("login", {
       session,
       appName
     });
   },
-  signupPageRenderer: (req, res) => {
+  signupPageRenderer: (_req, res) => {
     const session = defaultSession;
 
     return res.render("signup", {
@@ -70,7 +69,7 @@ module.exports = {
           });
         }
 
-        bcrypt.hash(password, 12, (err, hash) => {
+        bcrypt.hash(password, rounds, (err, hash) => {
           if (err) {
             return res.status(200).json({
               success: false,
