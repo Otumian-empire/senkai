@@ -12,14 +12,14 @@ module.exports = {
   },
   authSessionThenSetSession: (req, res, next) => {
     const session = defaultSession;
-    const authUser = { ...req.session.user }
+    const authUser = { ...req.session.user };
 
-    if (authUser && 'email' in authUser && authUser.email) {
+    if (authUser && "email" in authUser && authUser.email) {
       session.email = req.session.user.email;
       session.token = req.session.user.token;
     }
 
     req.session_ = session;
-    next()
+    next();
   }
-}
+};

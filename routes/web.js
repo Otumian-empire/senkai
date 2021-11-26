@@ -1,15 +1,10 @@
 const router = require("express").Router();
 
-const {
-  loginPageRenderer,
-  logoutReDirecter,
-  signupPageRenderer
-} = require("../controllers").accountController;
+const { loginPageRenderer, logoutReDirecter, signupPageRenderer } =
+  require("../controllers").accountController;
 
-const {
-  authSessionOrRedirect,
-  authSessionThenSetSession,
-} = require("../controllers").authMiddleware
+const { authSessionOrRedirect, authSessionThenSetSession } =
+  require("../controllers").authMiddleware;
 
 const {
   indexPageRenderer,
@@ -78,18 +73,10 @@ router.get("/setting/forget_password", (req, res) => {
 
 // ########################## ACCOUNT PAGES ##########################
 // signup page: signupPageRenderer
-router.get(
-  "/account/signup",
-  authSessionOrRedirect,
-  signupPageRenderer
-);
+router.get("/account/signup", authSessionOrRedirect, signupPageRenderer);
 
 // login page: loginPageRenderer
-router.get(
-  "/account/login",
-  authSessionOrRedirect,
-  loginPageRenderer
-);
+router.get("/account/login", authSessionOrRedirect, loginPageRenderer);
 
 // logout: logoutReDirecter
 router.get("/account/logout", logoutReDirecter);
@@ -99,11 +86,7 @@ router.get("/account/logout", logoutReDirecter);
 // TODO: read all articles, read 10 at a time, do it in the
 // articleCollectionController
 // TODO: look into reload on scroll functionality
-router.get(
-  "/article",
-  authSessionThenSetSession,
-  readManyArticleRenderer
-);
+router.get("/article", authSessionThenSetSession, readManyArticleRenderer);
 
 // create article page: createArticlePageRenderer
 // TODO: on success, redirect to article page with this articles id
@@ -131,8 +114,8 @@ router.get(
 // ########################## COMMENT PAGES ##########################
 // update comment page: updateCommentPageRenderer
 router.get(
-  "/comment/update/:comment_id", 
-  authSessionThenSetSession, 
+  "/comment/update/:comment_id",
+  authSessionThenSetSession,
   updateCommentPageRenderer
 );
 

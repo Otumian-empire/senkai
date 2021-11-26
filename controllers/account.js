@@ -1,16 +1,15 @@
 const bcrypt = require("bcrypt");
 
 const appName = require("../config/config").APP_NAME;
-const rounds = require("../config/config").ROUNDS
+const rounds = require("../config/config").ROUNDS;
 const defaultSession = require("../utils/constants").DEFAULT_SESSION;
 
 const User = require("../schemas").User;
 
 module.exports = {
-
   logoutReDirecter: (req, res) => {
     const authUser = { ...req.session.user };
-    const email = (authUser && "email" in authUser) ? authUser.email : "";
+    const email = authUser && "email" in authUser ? authUser.email : "";
 
     const redirectUrl = email
       ? `/account/login?email=${email}`
@@ -24,10 +23,10 @@ module.exports = {
   },
   loginPageRenderer: (req, res) => {
     const session = defaultSession;
-    const email = req.query.email
+    const email = req.query.email;
 
     if (email) {
-      session.email = email
+      session.email = email;
     }
 
     return res.render("login", {
