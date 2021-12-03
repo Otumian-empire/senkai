@@ -27,7 +27,7 @@ $(document).ready(() => {
     });
   }
 
-  //Signup form submission
+  // Signup form submission
   $("#signup_form").submit((e) => {
     e.preventDefault();
 
@@ -53,7 +53,7 @@ $(document).ready(() => {
     submitForm(url, data);
   });
 
-  //Login form submission
+  // Login form submission
   $("#login_form").submit((e) => {
     e.preventDefault();
 
@@ -67,4 +67,31 @@ $(document).ready(() => {
 
     submitForm(url, data);
   });
+
+  // Logout
+  // $("#logoutButton").on("click", (e) => {
+  //   e.preventDefault();
+
+  //   const url = "/account/logout";
+  //   // const method = "DELETE"
+  //   const redirect = "/account/login";
+
+  //   $.ajax({
+  //     url,
+  //     // method,
+  //     success: (response) => {
+  //       // const { success, message } = response;
+  //       //location.href = redirect;
+  //       // if (success) {
+
+  //       // } else {
+  //       //   $("#flash").attr("class", "alert alert-danger").text(response);
+  //       // }
+  //     }
+  //     // error: (error, xhr, message) => {
+  //     //   console.log(error, xhr, message);
+  //     //   $("#flash").attr("class", "alert alert-danger").text(message);
+  //     // }
+  //   });
+  // });
 });

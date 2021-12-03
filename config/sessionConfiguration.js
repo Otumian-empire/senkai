@@ -1,6 +1,7 @@
 const session = require("express-session");
 const MongoDBStore = require("connect-mongodb-session")(session);
-const sessionLifeTime = 1000 * 60 * 60 * 24 * 7; // 1 week
+const sessionLifeTime = 1000 * 60 * 60 * 24 * 7; // PROD: 1 week
+// const sessionLifeTime = 1000 * 60 * 10; // DEV: 10 minutes
 
 /**
  *
@@ -33,6 +34,8 @@ const sessionConfig = ({ uri, secret, isProdServer, collection }) => {
         }
       }
     ),
+    name: "connect.sid",
+    unset: "destroy",
     resave: false,
     saveUninitialized: false
   });

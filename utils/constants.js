@@ -1,3 +1,3 @@
 module.exports = {
-  DEFAULT_SESSION: { email: "", token: false }
+  DEFAULT_SESSION: { email: "", token: "" }
 };

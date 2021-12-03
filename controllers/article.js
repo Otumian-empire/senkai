@@ -2,8 +2,8 @@ const appName = require("../config/config").APP_NAME;
 
 module.exports = {
   indexPageRenderer: (req, res) => {
-    const session = req.session_;
-    delete req.session_;
+    const session = req.authUser;
+    delete req.authUser;
 
     const articles = [];
 
@@ -14,8 +14,8 @@ module.exports = {
     });
   },
   readManyArticleRenderer: (req, res) => {
-    const session = req.session_;
-    delete req.session_;
+    const session = req.authUser;
+    delete req.authUser;
 
     const articles = [];
 
@@ -26,18 +26,18 @@ module.exports = {
     });
   },
   createArticlePageRenderer: (req, res) => {
-    if (!req.session_) {
+    if (!req.authUser) {
       return res.redirect("/account/login");
     }
 
-    const session = req.session_;
-    delete req.session_;
+    const session = req.authUser;
+    delete req.authUser;
 
     return res.render("create_article", { session, appName });
   },
   readOneArticlePageRenderer: (req, res) => {
-    const session = req.session_;
-    delete req.session_;
+    const session = req.authUser;
+    delete req.authUser;
 
     const article = [];
     const comments = [];
@@ -50,8 +50,8 @@ module.exports = {
     });
   },
   updateArticlePageRenderer: (req, res) => {
-    const session = req.session_;
-    delete req.session_;
+    const session = req.authUser;
+    delete req.authUser;
 
     const article = [];
 

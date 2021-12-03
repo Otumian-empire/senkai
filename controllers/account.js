@@ -8,16 +8,16 @@ const User = require("../schemas").User;
 
 module.exports = {
   logoutReDirecter: (req, res) => {
-    const authUser = { ...req.session.user };
-    const email = authUser && "email" in authUser ? authUser.email : "";
+    const session = { ...req.session.user };
+    const email = session && session.email ? session.email : "";
 
-    const redirectUrl = email
-      ? `/account/login?email=${email}`
-      : "/account/login";
+    let redirectUrl = "/account/login";
 
-    if (authUser && authUser.email && authUser.token) {
-      delete req.session;
+    if (email) {
+      redirectUrl += `?email=${email}`;
     }
+
+    delete req.session;
 
     return res.redirect(redirectUrl);
   },

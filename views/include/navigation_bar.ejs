@@ -57,22 +57,24 @@
 
   <!-- write article, logout, user profile -->
   <div class="col-sm-3 col-md-3 col-lg-3 mx-auto">
+    
     <!-- check if there is session -->
-    <% if (session.email && session.token) { %>
+    <% if (!session.token || !session.email) { %>
+      <a class="btn btn-sm btn-outline-primary" 
+        href="/account/signup">Sign up</a>
+
+      <a class="btn btn-sm btn-outline-primary" 
+        href="/account/login">Log in</a>
+    <% } else { %>
       <a class="btn btn-sm btn-outline-primary" 
         href="/setting">My profile</a>
 
       <a class="btn btn-sm btn-outline-primary" 
         href="/article/create">write article</a>
 
-      <a class="btn btn-sm btn-outline-primary" 
+      <a id="logoutButton"
+        class="btn btn-sm btn-outline-primary" 
         href="/account/logout">Log out</a>
-    <% } else { %>
-      <a class="btn btn-sm btn-outline-primary" 
-        href="/account/signup">Sign up</a>
-
-      <a class="btn btn-sm btn-outline-primary" 
-        href="/account/login">Log in</a>
     <% } %>
   </div>
 </div>

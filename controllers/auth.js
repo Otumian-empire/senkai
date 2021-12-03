@@ -5,21 +5,21 @@ module.exports = {
     const authUser = { ...req.session.user };
 
     if (authUser && authUser.email && authUser.token) {
+      delete req.session;
       return res.redirect("/");
     }
 
     next();
   },
   authSessionThenSetSession: (req, res, next) => {
-    const session = defaultSession;
+    let session = defaultSession;
     const authUser = { ...req.session.user };
 
-    if (authUser && "email" in authUser && authUser.email) {
-      session.email = req.session.user.email;
-      session.token = req.session.user.token;
+    if (authUser && authUser.email && authUser.token) {
+      session = { ...authUser };
     }
 
-    req.session_ = session;
+    req.authUser = session;
     next();
   }
 };
