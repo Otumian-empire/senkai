@@ -4,6 +4,7 @@ const joiMiddleware = require("../utils/joiMiddleware");
 const joiSchemas = require("../utils/joiSchemas");
 
 const { signupProcessor, loginProcessor } = require("../controllers/account");
+const { contactMeProcessor } = require("../controllers/common");
 
 // ########################## SETTING PAGES ##########################
 // setting routes
@@ -97,5 +98,13 @@ router.post("/article/create", (req, res) => {
     index: "write_article"
   });
 });
+
+// ########################## CONTACT PAGE ##########################
+
+router.post(
+  "/contact",
+  joiMiddleware(joiSchemas.contactMeRequestBody),
+  contactMeProcessor
+);
 
 module.exports = router;

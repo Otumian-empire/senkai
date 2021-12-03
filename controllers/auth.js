@@ -5,11 +5,10 @@ module.exports = {
     const authUser = { ...req.session.user };
 
     if (authUser && authUser.email && authUser.token) {
-      delete req.session;
       return res.redirect("/");
     }
 
-    next();
+    return next();
   },
   authSessionThenSetSession: (req, res, next) => {
     let session = defaultSession;
@@ -20,6 +19,6 @@ module.exports = {
     }
 
     req.authUser = session;
-    next();
+    return next();
   }
 };

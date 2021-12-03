@@ -1,11 +1,10 @@
 $(document).ready(() => {
-  function submitForm(
-    url = "",
-    data = {},
-    method = "POST",
-    dataType = "json",
-    redirect = "/"
-  ) {
+  // Submit form
+  function submitForm(url = "", data = {}) {
+    const method = "POST";
+    const dataType = "json";
+    const redirect = "/";
+
     $.ajax({
       url,
       method,
@@ -28,37 +27,35 @@ $(document).ready(() => {
   }
 
   // Signup form submission
-  $("#signup_form").submit((e) => {
+  $("#signupForm").submit((e) => {
     e.preventDefault();
 
     const url = "/api/account/signup";
-    // const method = "POST";
 
-    const first_name = $("#first_name").val();
-    const last_name = $("#last_name").val();
+    const firstName = $("#firstName").val();
+    const lastName = $("#lastName").val();
     const email = $("#email").val();
     const bio = $("#bio").val();
     const password = $("#password").val();
-    const confirm_password = $("#confirm_password").val();
+    const confirmPassword = $("#confirmPassword").val();
 
     const data = {
-      first_name,
-      last_name,
+      firstName,
+      lastName,
       email,
       bio,
       password,
-      confirm_password
+      confirmPassword
     };
 
     submitForm(url, data);
   });
 
   // Login form submission
-  $("#login_form").submit((e) => {
+  $("#loginForm").submit((e) => {
     e.preventDefault();
 
     const url = "/api/account/login";
-    const method = "POST";
 
     const email = $("#email").val();
     const password = $("#password").val();
@@ -68,30 +65,44 @@ $(document).ready(() => {
     submitForm(url, data);
   });
 
-  // Logout
-  // $("#logoutButton").on("click", (e) => {
-  //   e.preventDefault();
+  // Contact Me form submission
+  $("#contactMeForm").submit((e) => {
+    e.preventDefault();
 
-  //   const url = "/account/logout";
-  //   // const method = "DELETE"
-  //   const redirect = "/account/login";
+    const url = "/api/contact";
+    const method = "POST";
+    const dataType = "json";
 
-  //   $.ajax({
-  //     url,
-  //     // method,
-  //     success: (response) => {
-  //       // const { success, message } = response;
-  //       //location.href = redirect;
-  //       // if (success) {
+    const fullName = $("#fullName").val();
+    const email = $("#email").val();
+    const subject = $("#subject").val();
+    const content = $("#content").val();
 
-  //       // } else {
-  //       //   $("#flash").attr("class", "alert alert-danger").text(response);
-  //       // }
-  //     }
-  //     // error: (error, xhr, message) => {
-  //     //   console.log(error, xhr, message);
-  //     //   $("#flash").attr("class", "alert alert-danger").text(message);
-  //     // }
-  //   });
-  // });
+    const data = { fullName, email, subject, content };
+
+    $.ajax({
+      url,
+      method,
+      data,
+      dataType,
+      success: (response) => {
+        const { success, message } = response;
+
+        if (success) {
+          $("#fullName").val("");
+          $("#email").val("");
+          $("#subject").val("");
+          $("#content").val("");
+
+          $("#flash").attr("class", "alert alert-success").text(message);
+        } else {
+          $("#flash").attr("class", "alert alert-danger").text(message);
+        }
+      },
+      error: (error, xhr, message) => {
+        console.log(error, xhr, message);
+        $("#flash").attr("class", "alert alert-danger").text(message);
+      }
+    });
+  });
 });

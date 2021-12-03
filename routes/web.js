@@ -1,6 +1,6 @@
 const router = require("express").Router();
 
-const { loginPageRenderer, logoutReDirecter, signupPageRenderer } =
+const { loginPageRenderer, logoutProcessor, signupPageRenderer } =
   require("../controllers").accountController;
 
 const { authSessionOrRedirect, authSessionThenSetSession } =
@@ -35,8 +35,6 @@ router.get("/", authSessionThenSetSession, indexPageRenderer);
 router.get("/about", authSessionThenSetSession, aboutPageRenderer);
 
 // contact page
-// TODO: create a model/schema for the contact me
-// look on the contact page to see which fields are needed
 router.get("/contact", authSessionThenSetSession, contactPageRenderer);
 
 // ########################## SETTING PAGES ##########################
@@ -78,8 +76,8 @@ router.get("/account/signup", authSessionOrRedirect, signupPageRenderer);
 // login page: loginPageRenderer
 router.get("/account/login", authSessionOrRedirect, loginPageRenderer);
 
-// logout: logoutReDirecter
-router.get("/account/logout", logoutReDirecter);
+// logout: logoutProcessor
+router.get("/account/logout", logoutProcessor);
 
 // ########################## ARTICLE PAGES ##########################
 // article page: readManyArticleRenderer

@@ -7,16 +7,15 @@ const defaultSession = require("../utils/constants").DEFAULT_SESSION;
 const User = require("../schemas").User;
 
 module.exports = {
-  logoutReDirecter: (req, res) => {
+  logoutProcessor: (req, res) => {
     const session = { ...req.session.user };
-    const email = session && session.email ? session.email : "";
-
     let redirectUrl = "/account/login";
 
-    if (email) {
-      redirectUrl += `?email=${email}`;
+    if (session && session.email) {
+      redirectUrl += `?email=${session.email}`;
     }
 
+    console.log({ ...res });
     delete req.session;
 
     return res.redirect(redirectUrl);
@@ -43,12 +42,12 @@ module.exports = {
     });
   },
   signupProcessor: (req, res) => {
-    const firstName = req.body.first_name;
-    const lastName = req.body.last_name;
+    const firstName = req.body.firstName;
+    const lastName = req.body.lastName;
     const email = req.body.email;
     const bio = req.body.bio;
     const password = req.body.password;
-    const confirmPassword = req.body.confirm_password;
+    const confirmPassword = req.body.confirmPassword;
 
     if (password !== confirmPassword) {
       return res.json({
