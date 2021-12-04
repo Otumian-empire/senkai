@@ -15,7 +15,6 @@ module.exports = {
       redirectUrl += `?email=${session.email}`;
     }
 
-    console.log({ ...res });
     delete req.session;
 
     return res.redirect(redirectUrl);
@@ -128,9 +127,7 @@ module.exports = {
     const email = req.body.email;
     const password = req.body.password;
 
-    User.findOne({
-      email
-    })
+    User.findOne({ email })
       .then((user) => {
         if (!user) {
           return res.json({
@@ -177,5 +174,59 @@ module.exports = {
           message: "An error occurred"
         });
       });
+  },
+  userProfilePageRenderer: (req, res) => {
+    const session = req.session.user;
+    const email = session.email;
+
+    User.findOne({ email })
+      .select("-password -createdAt -updatedAt")
+      .then((user) => {
+        if (!user) {
+          return res.redirect("/account/logout");
+        }
+
+        return res.render("user_profile", {
+          session,
+          currentUser: user,
+          appName
+        });
+      })
+      .catch(() => res.redirect("/account/logout"));
+  },
+  userProfileFieldUpdateProcessor: (req, res) => {
+    const email = req.session.user.email;
+    const token = req.params.token;
+
+    const value = req.body.value;
+    const fieldName = req.params.fieldName;
+
+    if (fieldName === "password" || fieldName === "email") {
+      return res.redirect("/setting");
+    }
+
+    User.findOne({ email, _id: token })
+      .select("-password -createdAt")
+      .then((user) => {
+        if (!user) {
+          return res.redirect("/account/logout");
+        }
+
+        user[fieldName] = value;
+        user.updateAt = Date.now();
+
+        user.save((err) => {
+          let success = false;
+          let message = "An error occurred";
+
+          if (!err) {
+            success = true;
+            message = "Update successful";
+          }
+
+          return res.json({ success, message });
+        });
+      })
+      .catch(() => res.redirect("/account/logout"));
   }
 };

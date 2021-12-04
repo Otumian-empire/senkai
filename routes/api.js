@@ -3,20 +3,30 @@ const router = require("express").Router();
 const joiMiddleware = require("../utils/joiMiddleware");
 const joiSchemas = require("../utils/joiSchemas");
 
-const { signupProcessor, loginProcessor } = require("../controllers/account");
+const {
+  authSessionRedirect,
+  authSessionThenSetSession,
+  authNoSessionRedirect
+} = require("../controllers").authMiddleware;
+
+const {
+  signupProcessor,
+  loginProcessor,
+  userProfileFieldUpdateProcessor
+} = require("../controllers/account");
 const { contactMeProcessor } = require("../controllers/common");
 
 // ########################## SETTING PAGES ##########################
 // setting routes
-router.put("/setting/:field_name", (req, res) => {
-  // TODO: update field name with the value passed in the request body
-  // TODO: logout if there is any issue
-  // TODO: this can not be used to reset the user email
-
-  return res.json({
-    index: "field_name"
-  });
-});
+// TODO: Use camelCase in the url, for parameter and query
+// update user profile fields: firstName, lastName, bio
+router.put(
+  "/setting/:token/:fieldName",
+  authNoSessionRedirect,
+  joiMiddleware(joiSchemas.updateSettingParameterBody, "params"),
+  joiMiddleware(joiSchemas.updateSettingRequestBody),
+  userProfileFieldUpdateProcessor
+);
 
 router.put("/setting/reset_password/:email", (req, res) => {
   // TODO: implement the password reset functionality
@@ -60,6 +70,7 @@ router.put("/comment/:comment_id", (req, res) => {
 // signup routes: signupProcessor
 router.post(
   "/account/signup",
+  authSessionRedirect,
   joiMiddleware(joiSchemas.signupRequestBody),
   signupProcessor
 );
@@ -67,11 +78,12 @@ router.post(
 // login route: loginProcessor
 router.post(
   "/account/login",
+  authSessionRedirect,
   joiMiddleware(joiSchemas.loginRequestBody),
   loginProcessor
 );
 
-router.delete("/account/delete/:email", (req, res) => {
+router.delete("/account/delete/:email", authSessionRedirect, (req, res) => {
   // TODO: delete user account
   // TODO: ask user if they want to hibernate or delete
   // all data related to their account

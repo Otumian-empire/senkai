@@ -11,30 +11,44 @@
 			<p>Because we do not keep any data of yours</p>
 		</div>
 
-		<% if (userData) { %>
+		<% if (currentUser) { %>
 			<div class="card card-update mx-auto mt-0">
 				<div class="card-header">My Account</div>
 
 				<!-- card body for first name starts here -->
 				<div class="card-body text-capitalize">
 					<!-- first name form starts here -->
-					<form method="POST" action="/setting/firstName/<%= userData.id %>" class="">
+					<form
+						method="POST"
+						action="/api/setting/<%= session.token %>/firstName"
+						class=""
+						id="firstNameUpdateForm">
 
 						<div class="form-group">
 							<div class="form-row">
 								<div class="col-md-4">
 									<!-- first name -->
 									<div class="form-label-group">
-										<p class="form-control border-0" name="update_first_name_value"><%= userData.firstName %></p>
-										<label for="first name" class="text-capitalize">Current First name</label>
+										<p 
+                      class="form-control border-0" 
+                      name="firstName">
+                        <%= currentUser.firstName %></p>
+										<label 
+                      for="first name" 
+                      class="text-capitalize">Current First name</label>
 									</div>
 								</div>
 
 								<div class="col-md-5">
 									<!-- new first name -->
 									<div class="form-label-group">
-										<input type="text" class="form-control" id="update_first_name" name="update_first_name"
-											placeholder="new first name" autofocus />
+										<input
+											type="text"
+											class="form-control"
+											id="newFirstName"
+											name="newFirstName"
+											placeholder="new first name"
+											autofocus />
 										<label for="new first name" class="text-capitalize">New First name</label>
 									</div>
 								</div>
@@ -42,8 +56,12 @@
 								<div class="col-md-2">
 									<!-- first name update button -->
 									<div class="form-label-group">
-										<button class="form-control-sm btn btn-primary text-capitalize" id="update_first_name_btn"
-											name="update_first_name_btn" placeholder="Last name" type="submit" value="update_first_name">GO</button>
+										<button
+											class="form-control-sm btn btn-primary text-capitalize"
+											id=""
+											name=""
+											type="submit"
+											value="GO">GO</button>
 									</div>
 								</div>
 							</div>
@@ -58,31 +76,48 @@
 				<!-- card body for last name starts here -->
 				<div class="card-body text-capitalize">
 					<!-- last name form starts here -->
-					<form method="POST" action="/setting/lastName/<%= userData.id %>" class="">
+					<form 
+            method="POST" 
+            action="/api/setting/<%= session.token %>/lastName" 
+            class=""
+            id="lastNameUpdateForm">
 						<div class="form-group">
 							<div class="form-row">
 								<div class="col-md-4">
 									<!-- last name -->
 									<div class="form-label-group">
-										<p class="form-control border-0" name="update_last_name_value"><%= userData.lastName %></p>
-										<label for="last name" class="text-capitalize">Current Last name</label>
+										<p 
+                      class="form-control border-0" 
+                      name="lastName">
+                        <%= currentUser.lastName %></p>
+										<label 
+                      for="last name" 
+                      class="text-capitalize">Current Last name</label>
 									</div>
 								</div>
 
 								<div class="col-md-5">
 									<!-- new last name -->
 									<div class="form-label-group">
-										<input type="text" class="form-control" id="update_last_name" name="update_last_name"
+										<input 
+                      type="text" 
+                      class="form-control" 
+                      id="newLastName" 
+                      name="newLastName"
 											placeholder="new last name" />
-										<label for="last name" class="text-capitalize">New Last name</label>
+
+										<label 
+                      for="last name" 
+                      class="text-capitalize">New Last name</label>
 									</div>
 								</div>
 
 								<div class="col-md-2">
 									<!-- last name update button -->
 									<div class="form-label-group">
-										<button class="form-control-sm btn btn-primary text-capitalize"
-											id="update_last_name_btn" name="update_last_name_btn" type="submit" value="update_last_name">GO</button>
+										<button 
+                      class="form-control-sm btn btn-primary text-capitalize"
+											id="" name="" type="submit" value="GO">GO</button>
 									</div>
 								</div>
 							</div>
@@ -97,13 +132,17 @@
 				<!-- card body for bio starts here -->
 				<div class="card-body text-capitalize">
 					<!-- bio form starts here -->
-					<form method="POST" action="/setting/bio/<%= userData.id %>" class="">
+					<form 
+            method="POST" 
+            action="/api/setting/<%= session.token %>/bio" 
+            class=""
+            id="bioUpdateForm">
 						<div class="form-group">
 							<div class="form-row">
 								<div class="col-md-4">
 									<!-- bio -->
 									<div class="form-label-group">
-										<p class="form-control border-0"><%= userData.bio %></p>
+										<p class="form-control border-0"><%= currentUser.bio %></p>
 										<label for="bio name" class="text-capitalize">Current bio</label>
 									</div>
 								</div>
@@ -111,8 +150,13 @@
 								<div class="col-md-5">
 									<!-- new bio -->
 									<div class="form-label-group">
-										<input type="text" class="form-control" id="update_bio" name="update_bio"
-											placeholder="new bio" autofocus />
+										<input 
+                      type="text" 
+                      class="form-control" 
+                      id="newBio" 
+                      name="newBio"
+											placeholder="new bio" 
+                      autofocus />
 										<label for="bio" class="text-capitalize">New bio</label>
 									</div>
 								</div>
@@ -120,8 +164,12 @@
 								<div class="col-md-2">
 									<!-- bio update button -->
 									<div class="form-label-group">
-										<button class="form-control-sm btn btn-primary text-capitalize" id="update_bio_btn"
-											name="update_bio_btn" type="submit" value="update_bio">GO</button>
+										<button 
+                      class="form-control-sm btn btn-primary text-capitalize" 
+                      id=""
+											name="" 
+                      type="submit" 
+                      value="GO">GO</button>
 									</div>
 								</div>
 							</div>
@@ -134,15 +182,21 @@
 				<hr>
 
 				<!-- card body for email starts here -->
+        <!-- TODO: set the action and method and change the button to a type, submit -->
 				<div class="card-body text-capitalize">
 					<!-- email form starts here -->
-					<form method="POST" action="/setting/email/<%= userData.id %>" class="">
+					<form 
+            method="" 
+            action="" 
+            class=""
+            id="emailUpdateForm">
 						<div class="form-group">
 							<div class="form-row">
 								<div class="col-md-4">
 									<!-- email -->
 									<div class="form-label-group">
-										<p class="form-control border-0"><%= userData.email %></p>
+										<p class="form-control border-0">
+                      <%= currentUser.email %></p>
 										<label for="email name" class="text-capitalize">Current email</label>
 									</div>
 								</div>
@@ -150,8 +204,11 @@
 								<div class="col">
 									<!-- email update button -->
 									<div class="form-label-group">
-										<button class="form-control-sm btn btn-primary text-capitalize" id="update_email"
-											name="update_email_btn" type="submit">Change Email</button>
+										<button 
+                      class="form-control-sm btn btn-primary text-capitalize" 
+                      id=""
+											name="" 
+                      type="button">Change Email</button>
 									</div>
 								</div>
 							</div>
@@ -166,7 +223,11 @@
 				<!-- card body for password starts here -->
 				<div class="card-body">
 					<!-- password form starts here -->
-					<form method="POST" action="/setting/password/<%= userData.id %>" class="">
+					<form 
+            method="" 
+            action="" 
+            class=""
+            id="passwordUpdateForm">
 						<div class="form-group">
 							<div class="form-row">
 								<div class="col-md-4">
@@ -180,8 +241,12 @@
 								<div class="col">
 									<!-- password update button -->
 									<div class="form-label-group">
-										<button class="form-control-sm btn btn-primary text-capitalize" id="update_password_btn"
-											name="update_password_btn" type="submit">Change Password</button>
+										<button 
+                    class="form-control-sm btn btn-primary text-capitalize" 
+                    id=""
+                    name="" 
+                    type="button"
+                    value="GO">Change Password</button>
 									</div>
 								</div>
 							</div>
@@ -195,22 +260,27 @@
 				<!-- card body for delete account starts here -->
 				<div class="card-body">
 					<!-- password form starts here -->
-					<form method="POST" action="/account/delete/<%= userData.id %>" class="">
+					<form 
+            method="POST" 
+            action="" 
+            class=""
+            id="deleteAccountForm">
 						<div class="form-group">
 							<div class="form-row">
 								<div class="col-md-3">
-									<!-- password -->
+									
 									<div class="form-label-group">
 										<p class="form-control border-0">This is irreversible</p>
 									</div>
 								</div>
 
 								<div class="col-md-8">
-									<!-- password update button -->
 									<div class="form-label-group">
-										<button class="form-control-sm btn btn-danger text-capitalize col"
-											id="delete_account_btn" name="delete_account_btn" type="submit">Delete
-											Account</button>
+										<button 
+                      class="form-control-sm btn btn-danger text-capitalize col"
+											id="" 
+                      name="" 
+                      type="button">Delete Account</button>
 									</div>
 								</div>
 							</div>
@@ -225,5 +295,5 @@
 	</div>
 </div>
 
-<%- include ('include/footer_section'); %> 
+<%- include ('include/footer_section'); %>
 <%- include ('include/footer'); %>

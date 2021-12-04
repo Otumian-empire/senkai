@@ -1,5 +1,5 @@
 $(document).ready(() => {
-  // Submit form
+  // Submit form - login and signup
   function submitForm(url = "", data = {}) {
     const method = "POST";
     const dataType = "json";
@@ -15,6 +15,41 @@ $(document).ready(() => {
 
         if (success) {
           location.href = redirect;
+        } else {
+          $("#flash").attr("class", "alert alert-danger").text(message);
+        }
+      },
+      error: (error, xhr, message) => {
+        console.log(error, xhr, message);
+        $("#flash").attr("class", "alert alert-danger").text(message);
+      }
+    });
+  }
+
+  function reloadPageAfter(seconds = 5000) {
+    setTimeout(() => {
+      location.reload(true);
+    }, seconds);
+  }
+
+  // Submit form - update firstName, lastName, bio
+  function updateFieldForm(event) {
+    const action = event.target.action;
+    const value = event.target[0].value;
+    const id = event.target[0].id;
+
+    $.ajax({
+      url: action,
+      method: "PUT",
+      data: { value },
+      dataType: "json",
+      success: (response) => {
+        const { success, message } = response;
+
+        if (success) {
+          $(`#${id}`).val("");
+          $("#flash").attr("class", "alert alert-success").text(message);
+          reloadPageAfter(2000);
         } else {
           $("#flash").attr("class", "alert alert-danger").text(message);
         }
@@ -104,5 +139,23 @@ $(document).ready(() => {
         $("#flash").attr("class", "alert alert-danger").text(message);
       }
     });
+  });
+
+  // update firstName
+  $("#firstNameUpdateForm").submit((e) => {
+    e.preventDefault();
+    updateFieldForm(e);
+  });
+
+  // update lastName
+  $("#lastNameUpdateForm").submit((e) => {
+    e.preventDefault();
+    updateFieldForm(e);
+  });
+
+  // update bio
+  $("#bioUpdateForm").submit((e) => {
+    e.preventDefault();
+    updateFieldForm(e);
   });
 });

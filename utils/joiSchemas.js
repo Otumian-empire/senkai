@@ -75,6 +75,13 @@ const schemas = {
     subject: Joi.string().min(5).max(150).trim().required(),
     content: Joi.string().min(15).max(1560).trim().required(),
     email: Joi.string().trim().email().required()
+  }),
+  updateSettingParameterBody: Joi.object().keys({
+    token: Joi.string().alphanum().length(24).trim().required(),
+    fieldName: Joi.string().min(3).max(10).trim().required()
+  }),
+  updateSettingRequestBody: Joi.object().keys({
+    value: Joi.string().min(3).max(256).trim().required()
   })
 };
 

@@ -1,10 +1,17 @@
 const router = require("express").Router();
 
-const { loginPageRenderer, logoutProcessor, signupPageRenderer } =
-  require("../controllers").accountController;
+const {
+  loginPageRenderer,
+  logoutProcessor,
+  signupPageRenderer,
+  userProfilePageRenderer
+} = require("../controllers").accountController;
 
-const { authSessionOrRedirect, authSessionThenSetSession } =
-  require("../controllers").authMiddleware;
+const {
+  authSessionRedirect,
+  authSessionThenSetSession,
+  authNoSessionRedirect
+} = require("../controllers").authMiddleware;
 
 const {
   indexPageRenderer,
@@ -38,18 +45,8 @@ router.get("/about", authSessionThenSetSession, aboutPageRenderer);
 router.get("/contact", authSessionThenSetSession, contactPageRenderer);
 
 // ########################## SETTING PAGES ##########################
-// user profile page
-// TODO: read user data and display it in the user setting view
-// TODO: logout user when there is not session
-// TODO: if there is any error, logout user
-// TODO: when things don't add up, redirect to the login page
-router.get("/setting", (req, res) => {
-  return res.render("user_profile", {
-    session: defaultSession,
-    currentUser: {},
-    appName
-  });
-});
+// user profile page: userProfilePageRenderer
+router.get("/setting", authNoSessionRedirect, userProfilePageRenderer);
 
 // password reset page
 // TODO: implement the password reset functionality
@@ -71,10 +68,10 @@ router.get("/setting/forget_password", (req, res) => {
 
 // ########################## ACCOUNT PAGES ##########################
 // signup page: signupPageRenderer
-router.get("/account/signup", authSessionOrRedirect, signupPageRenderer);
+router.get("/account/signup", authSessionRedirect, signupPageRenderer);
 
 // login page: loginPageRenderer
-router.get("/account/login", authSessionOrRedirect, loginPageRenderer);
+router.get("/account/login", authSessionRedirect, loginPageRenderer);
 
 // logout: logoutProcessor
 router.get("/account/logout", logoutProcessor);
@@ -91,8 +88,9 @@ router.get("/article", authSessionThenSetSession, readManyArticleRenderer);
 // do it with jquery
 router.get(
   "/article/create",
-  // authSessionOrRedirect,
+  // authSessionRedirect,
   authSessionThenSetSession,
+  // TODO: make it so that user can not view this page when they are not logged in
   createArticlePageRenderer
 );
 
@@ -109,7 +107,6 @@ router.get(
   updateArticlePageRenderer
 );
 
-// ########################## COMMENT PAGES ##########################
 // update comment page: updateCommentPageRenderer
 router.get(
   "/comment/update/:comment_id",
