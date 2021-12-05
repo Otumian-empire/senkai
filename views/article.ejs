@@ -12,21 +12,22 @@
           <h2><%= article.title %></h2>
           <% if (session.token && (session.email === article.email)) { %>
             <span class="mr-2">
-              <a href="/article/update/<%= article.id %>"
+              <a href="/article/update/<%= article._id %>"
                 class="btn btn-sm btn-success">UPDATE</a>
             </span>
 
             <span class="mr-2">
-              <a href="/article/delete/<%= article.id %>"
+              <!-- TODO: provide the api route -->
+              <a href="/article/delete/<%= article._id %>"
                 class="btn btn-sm btn-danger">DELETE</a>
             </span>
           <% } %>
 
           <!-- date and author's email-->
           <i class="fa fa-calendar"></i>
-          <span><%= article.date %></span>
+          <span><%= article.createdAt %></span>
           <i class="fa fa-user"></i>
-          <span><%= article.author %></span>
+          <span><%= article.email %></span>
           <br>
           <hr>
 
@@ -49,10 +50,10 @@
           <div class="text-area">
             <div class="card-header">Add Comment</div>
 
-            <form action="/comment/write/<%= article.id %>" method="post">
+            <form action="/comment/write/<%= article._id %>" method="post">
               <textarea
                 class="comment-box p-1 md-textarea form-control rounded-0"
-                placeholder="Place your comments here" type="textarea" id="comment-box"
+                placeholder="Place your comments here" type="textarea" id="commentBox"
                 name="comment_box"></textarea>
               <br>
 
@@ -76,19 +77,19 @@
                       <% if (session.token && (session.email == comment.email)) { %>
                         <span>
                           <!-- edit comment -->
-                          <span class='mr-2'><a href='/comment/update/<%= comment.id %>'
+                          <span class='mr-2'><a href='/comment/update/<%= comment._id %>'
                               class="btn btn-sm btn-primary">EDIT
                             </a></span>
 
                           <!-- delete comment -->
-                          <span class='mr-2'><a href='/comment/delete/<%= comment.id %>' class="btn btn-sm btn-danger">
+                          <span class='mr-2'><a href='/comment/delete/<%= comment._id %>' class="btn btn-sm btn-danger">
                               DELETE </a></span>
                         </span>
                       <% } %>
 
                       <!-- comment_date -->
                       <i class="fa fa-calendar"></i>
-                      <span class=''><%= comment.date %></span>
+                      <span class=''><%= comment.createdAt %></span>
 
                       <!-- user_email -->
                       <i class="fa fa-user"></i>
@@ -118,7 +119,7 @@
 
 <script>
 	tinymce.init({
-		selector: '#comment-box'
+		selector: '#commentBox'
 	});
 </script> -->
 

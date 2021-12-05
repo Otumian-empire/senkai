@@ -1,5 +1,6 @@
 const appName = require("../config/config").APP_NAME;
 const Article = require("../schemas").Article;
+const Comment = require("../schemas").Comment;
 
 module.exports = {
   indexPageRenderer: (req, res) => {
@@ -31,7 +32,6 @@ module.exports = {
     return res.render("create_article", { session, appName });
   },
   createArticleProcessor: (req, res) => {
-    // TODO: on success, redirect to index view
     // TODO: work on the publish field, it is set to True by default in schema
     const { title, content } = req.body;
     const email = req.session.user.email;
@@ -43,26 +43,35 @@ module.exports = {
       .then((article) => {
         let success = false;
         let message = "An error occurred while creating the article";
-        let id = "";
+        let articleId = "";
 
         if (article) {
           success = true;
           message = "article created successfully";
-          id = article._id;
+          articleId = article._id;
         }
 
-        return res.json({ success, message, id });
+        return res.json({ success, message, articleId });
       })
       .catch(() => {
         return res.json({ success: false, message: "An error ocurred" });
       });
   },
-  readOneArticlePageRenderer: (req, res) => {
+  readOneArticlePageRenderer: async (req, res) => {
     const session = req.authUser;
     delete req.authUser;
 
-    const article = [];
-    const comments = [];
+    const articleId = req.params.articleId;
+
+    let article = [];
+    let comments = [];
+
+    try {
+      article = await Article.findOne({ _id: articleId });
+      comments = await Comment.find({ articleId: articleId });
+    } catch (err) {
+      return res.redirect("/");
+    }
 
     return res.render("article", {
       session,

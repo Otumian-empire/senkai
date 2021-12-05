@@ -188,14 +188,13 @@ $(document).ready(() => {
       dataType: "json",
       success: (response) => {
         console.log({ ...response });
-        const { success, message, id } = response;
+        const { success, message, articleId } = response;
 
         if (success) {
           $(`#${titleId}`).val("");
           $(`#${contentId}`).val("");
           $("#flash").attr("class", "alert alert-success").text(message);
-          reloadPageAfter(2000);
-          // TODO: redirect to article and pass the article id to it
+          redirectTo(`/article/${articleId}`);
         } else {
           $("#flash").attr("class", "alert alert-danger").text(message);
         }

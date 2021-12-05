@@ -79,7 +79,7 @@ router.get("/account/signup", authSessionRedirect, signupPageRenderer);
 router.get("/account/login", authSessionRedirect, loginPageRenderer);
 
 // logout: logoutProcessor
-router.get("/account/logout", logoutProcessor);
+router.get("/account/logout", authSessionRedirect, logoutProcessor);
 
 // ########################## ARTICLE PAGES ##########################
 // article page: readManyArticleRenderer
@@ -96,12 +96,16 @@ router.get("/article/create", authNoSessionRedirect, createArticlePageRenderer);
 // read article by id page: readOneArticlePageRenderer
 // TODO: read article by id
 // TODO: read article's comments
-router.get("/article/:article_id", readOneArticlePageRenderer);
+router.get(
+  "/article/:articleId",
+  authSessionThenSetSession,
+  readOneArticlePageRenderer
+);
 
 // update article page: updateArticlePageRenderer
 // TODO: read article by id and pass it to the said view
 router.get(
-  "/article/update/:article_id",
+  "/article/update/:articleId",
   authSessionThenSetSession,
   updateArticlePageRenderer
 );
