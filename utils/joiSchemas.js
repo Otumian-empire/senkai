@@ -41,7 +41,6 @@ const schemas = {
   articleRequestBody: Joi.object().keys({
     title: Joi.string().min(15).max(256).trim().required(),
     content: Joi.string().min(15).max(2560).trim().required(),
-    userEmail: Joi.string().trim().email().required(),
     publish: Joi.boolean().default(true)
   }),
   commentRequestBody: Joi.object().keys({

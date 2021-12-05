@@ -7,20 +7,38 @@
 		<div class="container">
 				<div class="card-header">Create Article</div>
 
-				<form action="" method="">
-					<input class="form-control rounded-0" type="text" name="update_post_title" id="update_post_title"
-						placeholder="article header.." value="" autofocus />
+				<form 
+          action="/api/article/create" 
+          method="POST"
+          id="createArticleForm">
+					<input
+						class="form-control rounded-0"
+						type="text"
+						name="title"
+						id="title"
+						placeholder="article title.."
+						value="Hello there, this is the title"
+						autofocus />
 
 					<br>
 					<div class="text-area">
-						<textarea name="update_post_content" id="update_post_content"
-							class="p-1 md-textarea form-control rounded-0" rows="3" placeholder="article body.."
-							value=""></textarea>
+						<textarea 
+              name="update_post_content" 
+              id="content"
+							class="p-1 md-textarea form-control rounded-0" 
+              rows="3" 
+              placeholder="article body.."
+							value="">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Porro quidem veniam qui in, omnis, magni ab delectus placeat esse aut error odio accusamus voluptates fuga quod quam eos nostrum natus?</textarea>
 
 						<br>
-						<button name="update_post_submit_button" type="submit" class="btn btn-success btn-block"
-							value="update_article">SUBMIT
-							ARTICLE</button>
+            <!-- add a check button to be checked if you want the article 
+              to be published  -->
+						<button 
+              name="update_post_submit_button" 
+              type="submit" 
+              class="btn btn-success btn-block"
+							value=""
+              >SUBMIT ARTICLE</button>
 					</div>
 				</form>
 		</div>
@@ -30,7 +48,7 @@
 	<!--  include ('include/tinymce');  -->
 		<!-- <script>
 		tinymce.init({
-			selector: '#update_post_content'
+			selector: '#content'
 		});
 	</script> -->
 </div>

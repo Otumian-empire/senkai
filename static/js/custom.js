@@ -1,3 +1,8 @@
+// TODO: Find a way to send some auth credential along with the
+// to be send to the api. We have to make sure that the data was
+// sent with our jquery and not from outside by a user who has
+// logged in on the system
+
 $(document).ready(() => {
   // Submit form - login and signup
   function submitForm(url = "", data = {}) {
@@ -30,6 +35,10 @@ $(document).ready(() => {
     setTimeout(() => {
       location.reload(true);
     }, seconds);
+  }
+
+  function redirectTo(page = "/") {
+    location.href = page;
   }
 
   // Submit form - update firstName, lastName, bio
@@ -157,5 +166,44 @@ $(document).ready(() => {
   $("#bioUpdateForm").submit((e) => {
     e.preventDefault();
     updateFieldForm(e);
+  });
+
+  // create article
+  // TODO: when a check field is added, get the id and value of the check field
+  $("#createArticleForm").submit((event) => {
+    event.preventDefault();
+    const action = event.target.action;
+    const method = event.target.method;
+
+    const titleId = event.target[0].id;
+    const titleValue = event.target[0].value;
+
+    const contentId = event.target[1].id;
+    const contentValue = event.target[1].value;
+
+    $.ajax({
+      url: action,
+      method,
+      data: { title: titleValue, content: contentValue },
+      dataType: "json",
+      success: (response) => {
+        console.log({ ...response });
+        const { success, message, id } = response;
+
+        if (success) {
+          $(`#${titleId}`).val("");
+          $(`#${contentId}`).val("");
+          $("#flash").attr("class", "alert alert-success").text(message);
+          reloadPageAfter(2000);
+          // TODO: redirect to article and pass the article id to it
+        } else {
+          $("#flash").attr("class", "alert alert-danger").text(message);
+        }
+      },
+      error: (error, xhr, message) => {
+        console.log(error, xhr, message);
+        $("#flash").attr("class", "alert alert-danger").text(message);
+      }
+    });
   });
 });

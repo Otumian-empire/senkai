@@ -3,18 +3,22 @@ const router = require("express").Router();
 const joiMiddleware = require("../utils/joiMiddleware");
 const joiSchemas = require("../utils/joiSchemas");
 
-const {
-  authSessionRedirect,
-  authSessionThenSetSession,
-  authNoSessionRedirect
-} = require("../controllers").authMiddleware;
+// auth middleware
+const { authSessionRedirect, authNoSessionRedirect } =
+  require("../controllers").authMiddleware;
 
+// account controllers
 const {
   signupProcessor,
   loginProcessor,
   userProfileFieldUpdateProcessor
 } = require("../controllers/account");
+
+// common controllers
 const { contactMeProcessor } = require("../controllers/common");
+
+// article controllers
+const { createArticleProcessor } = require("../controllers/article");
 
 // ########################## SETTING PAGES ##########################
 // setting routes
@@ -83,6 +87,7 @@ router.post(
   loginProcessor
 );
 
+// delete account route: deleteAccountProcessor
 router.delete("/account/delete/:email", authSessionRedirect, (req, res) => {
   // TODO: delete user account
   // TODO: ask user if they want to hibernate or delete
@@ -104,12 +109,13 @@ router.put("/article/:article_id", (req, res) => {
   });
 });
 
-router.post("/article/create", (req, res) => {
-  // TODO: on success, redirect to index view
-  return res.json({
-    index: "write_article"
-  });
-});
+// create article: createArticleProcessor
+router.post(
+  "/article/create",
+  authNoSessionRedirect,
+  joiMiddleware(joiSchemas.articleRequestBody),
+  createArticleProcessor
+);
 
 // ########################## CONTACT PAGE ##########################
 

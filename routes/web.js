@@ -1,5 +1,6 @@
 const router = require("express").Router();
 
+// account renderer
 const {
   loginPageRenderer,
   logoutProcessor,
@@ -7,12 +8,14 @@ const {
   userProfilePageRenderer
 } = require("../controllers").accountController;
 
+// auth middleware
 const {
   authSessionRedirect,
   authSessionThenSetSession,
   authNoSessionRedirect
 } = require("../controllers").authMiddleware;
 
+// article renderers
 const {
   indexPageRenderer,
   readManyArticleRenderer,
@@ -21,9 +24,11 @@ const {
   updateArticlePageRenderer
 } = require("../controllers").articleController;
 
+// comment renderers
 const { updateCommentPageRenderer } =
   require("../controllers").commentController;
 
+// common renderers
 const { aboutPageRenderer, contactPageRenderer } =
   require("../controllers").commonController;
 
@@ -86,13 +91,7 @@ router.get("/article", authSessionThenSetSession, readManyArticleRenderer);
 // create article page: createArticlePageRenderer
 // TODO: on success, redirect to article page with this articles id
 // do it with jquery
-router.get(
-  "/article/create",
-  // authSessionRedirect,
-  authSessionThenSetSession,
-  // TODO: make it so that user can not view this page when they are not logged in
-  createArticlePageRenderer
-);
+router.get("/article/create", authNoSessionRedirect, createArticlePageRenderer);
 
 // read article by id page: readOneArticlePageRenderer
 // TODO: read article by id
