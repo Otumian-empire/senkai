@@ -39,8 +39,6 @@ const defaultSession = require("../utils/constants").DEFAULT_SESSION;
 // index page
 // TODO: read all articles and send to the index view when the page loads
 // TODO: add pagination to reading all articles, read 5 at a time
-// TODO: check whether a user object is set on the session object
-// then assign the the user email and _id as token to the session
 router.get("/", authSessionThenSetSession, indexPageRenderer);
 
 // about page: aboutPageRenderer
@@ -79,7 +77,7 @@ router.get("/account/signup", authSessionRedirect, signupPageRenderer);
 router.get("/account/login", authSessionRedirect, loginPageRenderer);
 
 // logout: logoutProcessor
-router.get("/account/logout", authSessionRedirect, logoutProcessor);
+router.get("/account/logout", authNoSessionRedirect, logoutProcessor);
 
 // ########################## ARTICLE PAGES ##########################
 // article page: readManyArticleRenderer
@@ -89,13 +87,9 @@ router.get("/account/logout", authSessionRedirect, logoutProcessor);
 router.get("/article", authSessionThenSetSession, readManyArticleRenderer);
 
 // create article page: createArticlePageRenderer
-// TODO: on success, redirect to article page with this articles id
-// do it with jquery
 router.get("/article/create", authNoSessionRedirect, createArticlePageRenderer);
 
 // read article by id page: readOneArticlePageRenderer
-// TODO: read article by id
-// TODO: read article's comments
 router.get(
   "/article/:articleId",
   authSessionThenSetSession,

@@ -3,11 +3,17 @@ const Article = require("../schemas").Article;
 const Comment = require("../schemas").Comment;
 
 module.exports = {
-  indexPageRenderer: (req, res) => {
+  indexPageRenderer: async (req, res) => {
     const session = req.authUser;
     delete req.authUser;
 
-    const articles = [];
+    let articles = [];
+
+    try {
+      articles = await Article.find({ limit: 5 });
+    } catch (err) {
+      return res.redirect("/");
+    }
 
     return res.render("index", {
       session,
@@ -15,11 +21,19 @@ module.exports = {
       appName
     });
   },
-  readManyArticleRenderer: (req, res) => {
+  readManyArticleRenderer: async (req, res) => {
     const session = req.authUser;
     delete req.authUser;
 
-    const articles = [];
+    let articles = [];
+
+    try {
+      articles = await Article.find({ limit: 15 }).select(
+        "-content -updatedAt"
+      );
+    } catch (err) {
+      return res.redirect("/");
+    }
 
     return res.render("all_articles", {
       session,

@@ -24,16 +24,16 @@
             <h2><%= article.title %></h2>
             <!-- date and author's email-->
             <i class="fa fa-calendar"></i>
-            <span class="mr-2"><%= article.date %></span>
+            <span class="mr-2"><%= article.createdAt %></span>
             <i class="fa fa-user"></i>
-            <span class=""><%= article.author %></span>
+            <span class=""><%= article.email %></span>
             <br />
             <hr />
 
             <!-- content -->
             <p>
               <%= article.content %>
-              <a href="/article/<%= article.id %>">
+              <a href="/article/<%= article._id %>">
                 <span>... leave a comment</span>
               </a>
             </p>
