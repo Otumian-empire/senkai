@@ -5,13 +5,14 @@ module.exports = {
     node: true,
     es6: true,
     browser: true,
+    jquery: true
   },
   extends: ["standard"],
   parserOptions: {
-    ecmaVersion: 12,
+    ecmaVersion: 12
   },
   rules: {
     semi: ["error", "always"],
-    quotes: ["error", "double"],
-  },
+    quotes: ["error", "double"]
+  }
 };

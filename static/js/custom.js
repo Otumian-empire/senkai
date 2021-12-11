@@ -5,7 +5,7 @@
 
 $(document).ready(() => {
   // Submit form - login and signup
-  function submitForm(url = "", data = {}) {
+  function submitForm (url = "", data = {}) {
     const method = "POST";
     const dataType = "json";
     const redirect = "/";
@@ -31,18 +31,18 @@ $(document).ready(() => {
     });
   }
 
-  function reloadPageAfter(seconds = 5000) {
+  function reloadPageAfter (seconds = 5000) {
     setTimeout(() => {
       location.reload(true);
     }, seconds);
   }
 
-  function redirectTo(page = "/") {
+  function redirectTo (page = "/") {
     location.href = page;
   }
 
   // Submit form - update firstName, lastName, bio
-  function updateFieldForm(event) {
+  function updateFieldForm (event) {
     const action = event.target.action;
     const value = event.target[0].value;
     const id = event.target[0].id;
@@ -187,7 +187,6 @@ $(document).ready(() => {
       data: { title: titleValue, content: contentValue },
       dataType: "json",
       success: (response) => {
-        console.log({ ...response });
         const { success, message, articleId } = response;
 
         if (success) {

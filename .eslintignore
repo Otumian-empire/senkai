@@ -1,0 +1,10 @@
+node_modules
+package-lock.json
+.vscode
+docs
+coverage
+views
+static/assets
+static/css
+static/js/bootstrap.js
+static/js/jquery-3.6.0.js
