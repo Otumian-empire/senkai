@@ -10,7 +10,7 @@ module.exports = {
     let articles = [];
 
     try {
-      articles = await Article.find({ limit: 5 });
+      articles = await Article.find().limit(5);
     } catch (err) {
       return res.redirect("/");
     }
@@ -28,9 +28,7 @@ module.exports = {
     let articles = [];
 
     try {
-      articles = await Article.find({ limit: 15 }).select(
-        "-content -updatedAt"
-      );
+      articles = await Article.find().limit(15).select("-content -updatedAt");
     } catch (err) {
       return res.redirect("/");
     }
@@ -94,16 +92,54 @@ module.exports = {
       appName
     });
   },
-  updateArticlePageRenderer: (req, res) => {
+  updateArticlePageRenderer: async (req, res) => {
     const session = req.authUser;
     delete req.authUser;
 
-    const article = [];
+    let article = {};
+
+    try {
+      const articleId = req.params.articleId;
+      article = await Article.findOne({ _id: articleId });
+    } catch (err) {
+      return res.redirect("/");
+    }
 
     return res.render("update_article", {
       session,
       article,
       appName
     });
+  },
+  updateArticleProcessor: async (req, res) => {
+    let success = false;
+    let message = "An error occurred";
+
+    try {
+      const articleId = req.params.articleId;
+      const { title, content } = req.body;
+
+      const article = await Article.findOne({ _id: articleId });
+
+      if (!article) {
+        return res.json({ success, message });
+      }
+
+      article.title = title;
+      article.content = content;
+      article.updateAt = Date.now();
+
+      article.save((err) => {
+        if (!err) {
+          success = true;
+          message = "Update successful";
+        }
+
+        return res.json({ success, message });
+      });
+    } catch (err) {
+      console.log(err);
+      return res.json({ success, message });
+    }
   }
 };

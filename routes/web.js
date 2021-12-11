@@ -37,8 +37,6 @@ const defaultSession = require("../utils/constants").DEFAULT_SESSION;
 
 // ########################## COMMON PAGES ##########################
 // index page
-// TODO: read all articles and send to the index view when the page loads
-// TODO: add pagination to reading all articles, read 5 at a time
 router.get("/", authSessionThenSetSession, indexPageRenderer);
 
 // about page: aboutPageRenderer
@@ -61,7 +59,7 @@ router.get("/setting/reset_password", (req, res) => {
 });
 
 // forget password page
-// TODO: implement the password reset functionality
+// TODO: implement the forget password functionality
 router.get("/setting/forget_password", (req, res) => {
   return res.render("forget_password", {
     session: defaultSession,
@@ -100,6 +98,7 @@ router.get(
 // TODO: read article by id and pass it to the said view
 router.get(
   "/article/update/:articleId",
+  authNoSessionRedirect,
   authSessionThenSetSession,
   updateArticlePageRenderer
 );
@@ -107,6 +106,7 @@ router.get(
 // update comment page: updateCommentPageRenderer
 router.get(
   "/comment/update/:comment_id",
+  authNoSessionRedirect,
   authSessionThenSetSession,
   updateCommentPageRenderer
 );

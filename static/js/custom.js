@@ -5,7 +5,7 @@
 
 $(document).ready(() => {
   // Submit form - login and signup
-  function submitForm(url = "", data = {}) {
+  function submitAccountForm(url = "", data = {}) {
     const method = "POST";
     const dataType = "json";
     const redirect = "/";
@@ -37,12 +37,45 @@ $(document).ready(() => {
     }, seconds);
   }
 
+  function articleForm(event, method = "POST") {
+    const action = event.target.action;
+
+    const titleId = event.target[0].id;
+    const titleValue = event.target[0].value;
+
+    const contentId = event.target[1].id;
+    const contentValue = event.target[1].value;
+
+    $.ajax({
+      url: action,
+      method,
+      data: { title: titleValue, content: contentValue },
+      dataType: "json",
+      success: (response) => {
+        const { success, message, articleId } = response;
+
+        if (success) {
+          $(`#${titleId}`).val("");
+          $(`#${contentId}`).val("");
+          $("#flash").attr("class", "alert alert-success").text(message);
+          redirectTo(`/article/${articleId}`);
+        } else {
+          $("#flash").attr("class", "alert alert-danger").text(message);
+        }
+      },
+      error: (error, xhr, message) => {
+        console.log({ error }, { xhr }, { message });
+        $("#flash").attr("class", "alert alert-danger").text(message);
+      }
+    });
+  }
+
   function redirectTo(page = "/") {
     location.href = page;
   }
 
   // Submit form - update firstName, lastName, bio
-  function updateFieldForm(event) {
+  function updateAccountFieldForm(event) {
     const action = event.target.action;
     const value = event.target[0].value;
     const id = event.target[0].id;
@@ -92,7 +125,7 @@ $(document).ready(() => {
       confirmPassword
     };
 
-    submitForm(url, data);
+    submitAccountForm(url, data);
   });
 
   // Login form submission
@@ -106,7 +139,7 @@ $(document).ready(() => {
 
     const data = { email, password };
 
-    submitForm(url, data);
+    submitAccountForm(url, data);
   });
 
   // Contact Me form submission
@@ -153,55 +186,35 @@ $(document).ready(() => {
   // update firstName
   $("#firstNameUpdateForm").submit((e) => {
     e.preventDefault();
-    updateFieldForm(e);
+
+    updateAccountFieldForm(e);
   });
 
   // update lastName
   $("#lastNameUpdateForm").submit((e) => {
     e.preventDefault();
-    updateFieldForm(e);
+
+    updateAccountFieldForm(e);
   });
 
   // update bio
   $("#bioUpdateForm").submit((e) => {
     e.preventDefault();
-    updateFieldForm(e);
+    updateAccountFieldForm(e);
   });
 
   // create article
   // TODO: when a check field is added, get the id and value of the check field
   $("#createArticleForm").submit((event) => {
     event.preventDefault();
-    const action = event.target.action;
-    const method = event.target.method;
+    articleForm(event);
+  });
 
-    const titleId = event.target[0].id;
-    const titleValue = event.target[0].value;
-
-    const contentId = event.target[1].id;
-    const contentValue = event.target[1].value;
-
-    $.ajax({
-      url: action,
-      method,
-      data: { title: titleValue, content: contentValue },
-      dataType: "json",
-      success: (response) => {
-        const { success, message, articleId } = response;
-
-        if (success) {
-          $(`#${titleId}`).val("");
-          $(`#${contentId}`).val("");
-          $("#flash").attr("class", "alert alert-success").text(message);
-          redirectTo(`/article/${articleId}`);
-        } else {
-          $("#flash").attr("class", "alert alert-danger").text(message);
-        }
-      },
-      error: (error, xhr, message) => {
-        console.log(error, xhr, message);
-        $("#flash").attr("class", "alert alert-danger").text(message);
-      }
-    });
+  // update article
+  // TODO: when a check field is added, get the id and value of the check field
+  $("#updateArticleForm").submit((event) => {
+    event.preventDefault();
+    const method = "PUT";
+    articleForm(event, method);
   });
 });

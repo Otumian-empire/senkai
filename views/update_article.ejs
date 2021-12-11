@@ -8,22 +8,36 @@
 			<% if (article) { %>
 				<div class="card-header">Update Article</div>
 
-				<form action="" method="">
-					<input class="form-control rounded-0" type="text" name="update_post_title" id="update_post_title"
-						placeholder="article header.." value="<%= article.title %>" autofocus />
+				<form
+				  action="/api/article/<%= article._id %>"
+          id="updateArticleForm"
+				  method="PUT">
+					<input 
+            class="form-control rounded-0" 
+            type="text" 
+            name="title"
+						id="title"
+						placeholder="article header.." 
+            value="<%= article.title %>" 
+            autofocus />
 
 					<br>
-
 					<div class="text-area">
-						<textarea name="update_post_content" id="update_post_content"
-							class="p-1 md-textarea form-control rounded-0" rows="3" placeholder="article body.."
+						<textarea 
+              name="update_post_content" 
+              id="content"
+							class="p-1 md-textarea form-control rounded-0" 
+              rows="3" 
+              placeholder="article body.."
 							value=""><%= article.content %></textarea>
 
 						<br>
 
-						<button name="update_post_submit_button" type="submit" class="btn btn-success btn-block"
-							value="update_article">UPDATE
-							ARTICLE</button>
+						<button 
+              name="" 
+              type="submit" 
+              class="btn btn-success btn-block"
+							value="">UPDATE ARTICLE</button>
 					</div>
 				</form>
 			<% } %>
@@ -39,5 +53,5 @@
 	</script> -->
 </div>
 
-<%- include ('include/footer_section'); %> 
+<%- include ('include/footer_section'); %>
 <%- include ('include/footer'); %>

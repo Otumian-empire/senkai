@@ -18,7 +18,10 @@ const {
 const { contactMeProcessor } = require("../controllers/common");
 
 // article controllers
-const { createArticleProcessor } = require("../controllers/article");
+const {
+  createArticleProcessor,
+  updateArticleProcessor
+} = require("../controllers/article");
 
 // ########################## SETTING PAGES ##########################
 // setting routes
@@ -99,15 +102,13 @@ router.delete("/account/delete/:email", authSessionRedirect, (req, res) => {
 });
 
 // ########################## ARTICLE PAGES ##########################
-// articles routes
-router.put("/article/:article_id", (req, res) => {
-  // TODO: update article by id
-  // TODO: logout user if session and email and article does not belong to user
-  // TODO: redirect to articles view
-  return res.json({
-    index: 1
-  });
-});
+// articles routes: updateArticleProcessor
+router.put(
+  "/article/:articleId",
+  authNoSessionRedirect,
+  joiMiddleware(joiSchemas.articleRequestBody),
+  updateArticleProcessor
+);
 
 // create article: createArticleProcessor
 router.post(

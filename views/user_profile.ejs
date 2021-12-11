@@ -29,12 +29,12 @@
 								<div class="col-md-4">
 									<!-- first name -->
 									<div class="form-label-group">
-										<p 
-                      class="form-control border-0" 
+										<p
+                      class="form-control border-0"
                       name="firstName">
                         <%= currentUser.firstName %></p>
-										<label 
-                      for="first name" 
+										<label
+                      for="first name"
                       class="text-capitalize">Current First name</label>
 									</div>
 								</div>
@@ -76,9 +76,9 @@
 				<!-- card body for last name starts here -->
 				<div class="card-body text-capitalize">
 					<!-- last name form starts here -->
-					<form 
-            method="POST" 
-            action="/api/setting/<%= session.token %>/lastName" 
+					<form
+            method="POST"
+            action="/api/setting/<%= session.token %>/lastName"
             class=""
             id="lastNameUpdateForm">
 						<div class="form-group">
@@ -86,12 +86,12 @@
 								<div class="col-md-4">
 									<!-- last name -->
 									<div class="form-label-group">
-										<p 
-                      class="form-control border-0" 
+										<p
+                      class="form-control border-0"
                       name="lastName">
                         <%= currentUser.lastName %></p>
-										<label 
-                      for="last name" 
+										<label
+                      for="last name"
                       class="text-capitalize">Current Last name</label>
 									</div>
 								</div>
@@ -99,15 +99,15 @@
 								<div class="col-md-5">
 									<!-- new last name -->
 									<div class="form-label-group">
-										<input 
-                      type="text" 
-                      class="form-control" 
-                      id="newLastName" 
+										<input
+                      type="text"
+                      class="form-control"
+                      id="newLastName"
                       name="newLastName"
 											placeholder="new last name" />
 
-										<label 
-                      for="last name" 
+										<label
+                      for="last name"
                       class="text-capitalize">New Last name</label>
 									</div>
 								</div>
@@ -115,7 +115,7 @@
 								<div class="col-md-2">
 									<!-- last name update button -->
 									<div class="form-label-group">
-										<button 
+										<button
                       class="form-control-sm btn btn-primary text-capitalize"
 											id="" name="" type="submit" value="GO">GO</button>
 									</div>
@@ -132,9 +132,9 @@
 				<!-- card body for bio starts here -->
 				<div class="card-body text-capitalize">
 					<!-- bio form starts here -->
-					<form 
-            method="POST" 
-            action="/api/setting/<%= session.token %>/bio" 
+					<form
+            method="POST"
+            action="/api/setting/<%= session.token %>/bio"
             class=""
             id="bioUpdateForm">
 						<div class="form-group">
@@ -150,12 +150,12 @@
 								<div class="col-md-5">
 									<!-- new bio -->
 									<div class="form-label-group">
-										<input 
-                      type="text" 
-                      class="form-control" 
-                      id="newBio" 
+										<input
+                      type="text"
+                      class="form-control"
+                      id="newBio"
                       name="newBio"
-											placeholder="new bio" 
+											placeholder="new bio"
                       autofocus />
 										<label for="bio" class="text-capitalize">New bio</label>
 									</div>
@@ -164,11 +164,11 @@
 								<div class="col-md-2">
 									<!-- bio update button -->
 									<div class="form-label-group">
-										<button 
-                      class="form-control-sm btn btn-primary text-capitalize" 
+										<button
+                      class="form-control-sm btn btn-primary text-capitalize"
                       id=""
-											name="" 
-                      type="submit" 
+											name=""
+                      type="submit"
                       value="GO">GO</button>
 									</div>
 								</div>
@@ -185,9 +185,9 @@
         <!-- TODO: set the action and method and change the button to a type, submit -->
 				<div class="card-body text-capitalize">
 					<!-- email form starts here -->
-					<form 
-            method="" 
-            action="" 
+					<form
+            method=""
+            action=""
             class=""
             id="emailUpdateForm">
 						<div class="form-group">
@@ -204,10 +204,10 @@
 								<div class="col">
 									<!-- email update button -->
 									<div class="form-label-group">
-										<button 
-                      class="form-control-sm btn btn-primary text-capitalize" 
+										<button
+                      class="form-control-sm btn btn-primary text-capitalize"
                       id=""
-											name="" 
+											name=""
                       type="button">Change Email</button>
 									</div>
 								</div>
@@ -223,9 +223,9 @@
 				<!-- card body for password starts here -->
 				<div class="card-body">
 					<!-- password form starts here -->
-					<form 
-            method="" 
-            action="" 
+					<form
+            method=""
+            action=""
             class=""
             id="passwordUpdateForm">
 						<div class="form-group">
@@ -241,10 +241,10 @@
 								<div class="col">
 									<!-- password update button -->
 									<div class="form-label-group">
-										<button 
-                    class="form-control-sm btn btn-primary text-capitalize" 
+										<button
+                    class="form-control-sm btn btn-primary text-capitalize"
                     id=""
-                    name="" 
+                    name=""
                     type="button"
                     value="GO">Change Password</button>
 									</div>
@@ -260,15 +260,15 @@
 				<!-- card body for delete account starts here -->
 				<div class="card-body">
 					<!-- password form starts here -->
-					<form 
-            method="POST" 
-            action="" 
+					<form
+            method="POST"
+            action=""
             class=""
             id="deleteAccountForm">
 						<div class="form-group">
 							<div class="form-row">
 								<div class="col-md-3">
-									
+
 									<div class="form-label-group">
 										<p class="form-control border-0">This is irreversible</p>
 									</div>
@@ -276,10 +276,10 @@
 
 								<div class="col-md-8">
 									<div class="form-label-group">
-										<button 
+										<button
                       class="form-control-sm btn btn-danger text-capitalize col"
-											id="" 
-                      name="" 
+											id=""
+                      name=""
                       type="button">Delete Account</button>
 									</div>
 								</div>
