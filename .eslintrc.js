@@ -12,6 +12,14 @@ module.exports = {
     ecmaVersion: 12
   },
   rules: {
+    "space-before-function-paren": [
+      "error",
+      {
+        anonymous: "always",
+        named: "never",
+        asyncArrow: "always"
+      }
+    ],
     semi: ["error", "always"],
     quotes: ["error", "double"]
   }
