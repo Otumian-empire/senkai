@@ -2,297 +2,297 @@
 <%- include ('include/navigation_bar'); %>
 
 <div id="first-div" class="container">
-  	<!-- put body here -->
-	<div class="index-body container">
-		<div class="text-center text-info text-warning card-subtitle">
-			<p>Make changes and click the button to update</p>
-			<p>Certain information updates require further information, which would be sent to you via e-mail</p>
-			<p>Some changes are permanent such as deleting profile - you can not gain the articles or comment deleted</p>
-			<p>Because we do not keep any data of yours</p>
-		</div>
+  <!-- put body here -->
+  <div class="index-body container">
+    <div class="text-center text-info text-warning card-subtitle">
+      <p>Make changes and click the button to update</p>
+      <p>Certain information updates require further information, which would be sent to you via e-mail</p>
+      <p>Some changes are permanent such as deleting profile - you can not gain the articles or comment deleted</p>
+      <p>Because we do not keep any data of yours</p>
+    </div>
 
-		<% if (currentUser) { %>
-			<div class="card card-update mx-auto mt-0">
-				<div class="card-header">My Account</div>
+    <% if (currentUser) { %>
+      <div class="card card-update mx-auto mt-0">
+        <div class="card-header">My Account</div>
 
-				<!-- card body for first name starts here -->
-				<div class="card-body text-capitalize">
-					<!-- first name form starts here -->
-					<form
-						method="POST"
-						action="/api/setting/<%= session.token %>/firstName"
-						class=""
-						id="firstNameUpdateForm">
+        <!-- card body for first name starts here -->
+        <div class="card-body text-capitalize">
+          <!-- first name form starts here -->
+          <form
+            method="POST"
+            action="/api/setting/<%= session.token %>/firstName"
+            class=""
+            id="firstNameUpdateForm">
 
-						<div class="form-group">
-							<div class="form-row">
-								<div class="col-md-4">
-									<!-- first name -->
-									<div class="form-label-group">
-										<p
+            <div class="form-group">
+              <div class="form-row">
+                <div class="col-md-4">
+                  <!-- first name -->
+                  <div class="form-label-group">
+                    <p
                       class="form-control border-0"
                       name="firstName">
                         <%= currentUser.firstName %></p>
-										<label
+                    <label
                       for="first name"
                       class="text-capitalize">Current First name</label>
-									</div>
-								</div>
+                  </div>
+                </div>
 
-								<div class="col-md-5">
-									<!-- new first name -->
-									<div class="form-label-group">
-										<input
-											type="text"
-											class="form-control"
-											id="newFirstName"
-											name="newFirstName"
-											placeholder="new first name"
-											autofocus />
-										<label for="new first name" class="text-capitalize">New First name</label>
-									</div>
-								</div>
+                <div class="col-md-5">
+                  <!-- new first name -->
+                  <div class="form-label-group">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="newFirstName"
+                      name="newFirstName"
+                      placeholder="new first name"
+                      autofocus />
+                    <label for="new first name" class="text-capitalize">New First name</label>
+                  </div>
+                </div>
 
-								<div class="col-md-2">
-									<!-- first name update button -->
-									<div class="form-label-group">
-										<button
-											class="form-control-sm btn btn-primary text-capitalize"
-											id=""
-											name=""
-											type="submit"
-											value="GO">GO</button>
-									</div>
-								</div>
-							</div>
-						</div>
-					</form>
-					<!-- first name form ends here -->
-				</div>
-				<!-- card body for first name ends here -->
+                <div class="col-md-2">
+                  <!-- first name update button -->
+                  <div class="form-label-group">
+                    <button
+                      class="form-control-sm btn btn-primary text-capitalize"
+                      id=""
+                      name=""
+                      type="submit"
+                      value="GO">GO</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+          <!-- first name form ends here -->
+        </div>
+        <!-- card body for first name ends here -->
 
-				<hr>
+        <hr>
 
-				<!-- card body for last name starts here -->
-				<div class="card-body text-capitalize">
-					<!-- last name form starts here -->
-					<form
+        <!-- card body for last name starts here -->
+        <div class="card-body text-capitalize">
+          <!-- last name form starts here -->
+          <form
             method="POST"
             action="/api/setting/<%= session.token %>/lastName"
             class=""
             id="lastNameUpdateForm">
-						<div class="form-group">
-							<div class="form-row">
-								<div class="col-md-4">
-									<!-- last name -->
-									<div class="form-label-group">
-										<p
+            <div class="form-group">
+              <div class="form-row">
+                <div class="col-md-4">
+                  <!-- last name -->
+                  <div class="form-label-group">
+                    <p
                       class="form-control border-0"
                       name="lastName">
                         <%= currentUser.lastName %></p>
-										<label
+                    <label
                       for="last name"
                       class="text-capitalize">Current Last name</label>
-									</div>
-								</div>
+                  </div>
+                </div>
 
-								<div class="col-md-5">
-									<!-- new last name -->
-									<div class="form-label-group">
-										<input
+                <div class="col-md-5">
+                  <!-- new last name -->
+                  <div class="form-label-group">
+                    <input
                       type="text"
                       class="form-control"
                       id="newLastName"
                       name="newLastName"
-											placeholder="new last name" />
+                      placeholder="new last name" />
 
-										<label
+                    <label
                       for="last name"
                       class="text-capitalize">New Last name</label>
-									</div>
-								</div>
+                  </div>
+                </div>
 
-								<div class="col-md-2">
-									<!-- last name update button -->
-									<div class="form-label-group">
-										<button
+                <div class="col-md-2">
+                  <!-- last name update button -->
+                  <div class="form-label-group">
+                    <button
                       class="form-control-sm btn btn-primary text-capitalize"
-											id="" name="" type="submit" value="GO">GO</button>
-									</div>
-								</div>
-							</div>
-						</div>
-					</form>
-					<!-- last name form ends here -->
-				</div>
-				<!-- card body for last name ends here -->
+                      id="" name="" type="submit" value="GO">GO</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+          <!-- last name form ends here -->
+        </div>
+        <!-- card body for last name ends here -->
 
-				<hr>
+        <hr>
 
-				<!-- card body for bio starts here -->
-				<div class="card-body text-capitalize">
-					<!-- bio form starts here -->
-					<form
+        <!-- card body for bio starts here -->
+        <div class="card-body text-capitalize">
+          <!-- bio form starts here -->
+          <form
             method="POST"
             action="/api/setting/<%= session.token %>/bio"
             class=""
             id="bioUpdateForm">
-						<div class="form-group">
-							<div class="form-row">
-								<div class="col-md-4">
-									<!-- bio -->
-									<div class="form-label-group">
-										<p class="form-control border-0"><%= currentUser.bio %></p>
-										<label for="bio name" class="text-capitalize">Current bio</label>
-									</div>
-								</div>
+            <div class="form-group">
+              <div class="form-row">
+                <div class="col-md-4">
+                  <!-- bio -->
+                  <div class="form-label-group">
+                    <p class="form-control border-0"><%= currentUser.bio %></p>
+                    <label for="bio name" class="text-capitalize">Current bio</label>
+                  </div>
+                </div>
 
-								<div class="col-md-5">
-									<!-- new bio -->
-									<div class="form-label-group">
-										<input
+                <div class="col-md-5">
+                  <!-- new bio -->
+                  <div class="form-label-group">
+                    <input
                       type="text"
                       class="form-control"
                       id="newBio"
                       name="newBio"
-											placeholder="new bio"
+                      placeholder="new bio"
                       autofocus />
-										<label for="bio" class="text-capitalize">New bio</label>
-									</div>
-								</div>
+                    <label for="bio" class="text-capitalize">New bio</label>
+                  </div>
+                </div>
 
-								<div class="col-md-2">
-									<!-- bio update button -->
-									<div class="form-label-group">
-										<button
+                <div class="col-md-2">
+                  <!-- bio update button -->
+                  <div class="form-label-group">
+                    <button
                       class="form-control-sm btn btn-primary text-capitalize"
                       id=""
-											name=""
+                      name=""
                       type="submit"
                       value="GO">GO</button>
-									</div>
-								</div>
-							</div>
-						</div>
-					</form>
-					<!-- bio form ends here -->
-				</div>
-				<!-- card body for bio ends here -->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+          <!-- bio form ends here -->
+        </div>
+        <!-- card body for bio ends here -->
 
-				<hr>
+        <hr>
 
-				<!-- card body for email starts here -->
+        <!-- card body for email starts here -->
         <!-- TODO: set the action and method and change the button to a type, submit -->
-				<div class="card-body text-capitalize">
-					<!-- email form starts here -->
-					<form
+        <div class="card-body text-capitalize">
+          <!-- email form starts here -->
+          <form
             method=""
             action=""
             class=""
             id="emailUpdateForm">
-						<div class="form-group">
-							<div class="form-row">
-								<div class="col-md-4">
-									<!-- email -->
-									<div class="form-label-group">
-										<p class="form-control border-0">
+            <div class="form-group">
+              <div class="form-row">
+                <div class="col-md-4">
+                  <!-- email -->
+                  <div class="form-label-group">
+                    <p class="form-control border-0">
                       <%= currentUser.email %></p>
-										<label for="email name" class="text-capitalize">Current email</label>
-									</div>
-								</div>
+                    <label for="email name" class="text-capitalize">Current email</label>
+                  </div>
+                </div>
 
-								<div class="col">
-									<!-- email update button -->
-									<div class="form-label-group">
-										<button
+                <div class="col">
+                  <!-- email update button -->
+                  <div class="form-label-group">
+                    <button
                       class="form-control-sm btn btn-primary text-capitalize"
                       id=""
-											name=""
+                      name=""
                       type="button">Change Email</button>
-									</div>
-								</div>
-							</div>
-						</div>
-					</form>
-					<!-- email form ends here -->
-				</div>
-				<!-- card body for email ends here -->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+          <!-- email form ends here -->
+        </div>
+        <!-- card body for email ends here -->
 
-				<hr>
+        <hr>
 
-				<!-- card body for password starts here -->
-				<div class="card-body">
-					<!-- password form starts here -->
-					<form
+        <!-- card body for password starts here -->
+        <div class="card-body">
+          <!-- password form starts here -->
+          <form
             method=""
             action=""
             class=""
             id="passwordUpdateForm">
-						<div class="form-group">
-							<div class="form-row">
-								<div class="col-md-4">
-									<!-- password -->
-									<div class="form-label-group">
-										<p class="form-control border-0">***********</p>
-										<label for="password name" class="text-capitalize">Current password</label>
-									</div>
-								</div>
+            <div class="form-group">
+              <div class="form-row">
+                <div class="col-md-4">
+                  <!-- password -->
+                  <div class="form-label-group">
+                    <p class="form-control border-0">***********</p>
+                    <label for="password name" class="text-capitalize">Current password</label>
+                  </div>
+                </div>
 
-								<div class="col">
-									<!-- password update button -->
-									<div class="form-label-group">
-										<button
+                <div class="col">
+                  <!-- password update button -->
+                  <div class="form-label-group">
+                    <button
                     class="form-control-sm btn btn-primary text-capitalize"
                     id=""
                     name=""
                     type="button"
                     value="GO">Change Password</button>
-									</div>
-								</div>
-							</div>
-						</div>
-					</form>
-					<!-- password form ends here -->
-				</div>
-				<!-- card body for password ends here -->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+          <!-- password form ends here -->
+        </div>
+        <!-- card body for password ends here -->
 
-				<hr>
-				<!-- card body for delete account starts here -->
-				<div class="card-body">
-					<!-- password form starts here -->
-					<form
+        <hr>
+        <!-- card body for delete account starts here -->
+        <div class="card-body">
+          <!-- password form starts here -->
+          <form
             method="POST"
             action=""
             class=""
             id="deleteAccountForm">
-						<div class="form-group">
-							<div class="form-row">
-								<div class="col-md-3">
+            <div class="form-group">
+              <div class="form-row">
+                <div class="col-md-3">
 
-									<div class="form-label-group">
-										<p class="form-control border-0">This is irreversible</p>
-									</div>
-								</div>
+                  <div class="form-label-group">
+                    <p class="form-control border-0">This is irreversible</p>
+                  </div>
+                </div>
 
-								<div class="col-md-8">
-									<div class="form-label-group">
-										<button
+                <div class="col-md-8">
+                  <div class="form-label-group">
+                    <button
                       class="form-control-sm btn btn-danger text-capitalize col"
-											id=""
+                      id=""
                       name=""
                       type="button">Delete Account</button>
-									</div>
-								</div>
-							</div>
-						</div>
-					</form>
-					<!-- password form ends here -->
-				</div>
-				<!-- card body for password ends here -->
-			</div>
-		<!-- card ends here -->
-		<% } %>
-	</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+          <!-- password form ends here -->
+        </div>
+        <!-- card body for password ends here -->
+      </div>
+    <!-- card ends here -->
+    <% } %>
+  </div>
 </div>
 
 <%- include ('include/footer_section'); %>

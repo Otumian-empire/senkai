@@ -12,30 +12,30 @@
 				  action="/api/article/<%= article._id %>"
           id="updateArticleForm"
 				  method="PUT">
-					<input 
-            class="form-control rounded-0" 
-            type="text" 
+					<input
+            class="form-control rounded-0"
+            type="text"
             name="title"
 						id="title"
-						placeholder="article header.." 
-            value="<%= article.title %>" 
+						placeholder="article header.."
+            value="<%= article.title %>"
             autofocus />
 
 					<br>
 					<div class="text-area">
-						<textarea 
-              name="update_post_content" 
+						<textarea
+              name="update_post_content"
               id="content"
-							class="p-1 md-textarea form-control rounded-0" 
-              rows="3" 
+							class="p-1 md-textarea form-control rounded-0"
+              rows="3"
               placeholder="article body.."
 							value=""><%= article.content %></textarea>
 
 						<br>
 
-						<button 
-              name="" 
-              type="submit" 
+						<button
+              name=""
+              type="submit"
               class="btn btn-success btn-block"
 							value="">UPDATE ARTICLE</button>
 					</div>
