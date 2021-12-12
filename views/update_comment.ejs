@@ -8,24 +8,25 @@
       <% if (comment) { %>
         <div class="card-header">Update Comment</div>
 
-        <form 
-          action="/comment/update/<%= comment.id %>" 
-          method="post">
+        <form
+          id="updateCommentForm"
+          action="/api/comment/<%= comment.id %>"
+          method="PUT">
           <div class="text-area">
-            <textarea 
-              name="update_comment_content" 
-              id="update_comment_content"
-              class="p-1 md-textarea form-control rounded-0" 
-              rows="3" 
-              placeholder="article body.."
+            <textarea
+              name="comment"
+              id="comment"
+              class="p-1 md-textarea form-control rounded-0"
+              rows="3"
+              placeholder="comment body.."
               value=""><%= comment.text %></textarea>
 
             <br>
-            <button 
-              name="update_comment_submit_button" 
-              type="submit" 
-              class="btn btn-success btn-block" 
-              value="update_comment">UPDATE COMMENT</button>
+            <button
+              name=""
+              type="submit"
+              class="btn btn-success btn-block"
+              value="">UPDATE COMMENT</button>
           </div>
         </form>
       <% } %>

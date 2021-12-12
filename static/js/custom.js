@@ -217,4 +217,44 @@ $(document).ready(() => {
     const method = "PUT";
     articleForm(event, method);
   });
+
+  function commentForm(event, method = "POST") {
+    const action = event.target.action;
+    const value = event.target[0].value;
+    const id = event.target[0].id;
+
+    $.ajax({
+      url: action,
+      method,
+      data: { comment: value },
+      dataType: "json",
+      success: (response) => {
+        const { success, message, articleId } = response;
+
+        if (success) {
+          $(`#${id}`).val("");
+          $("#flash").attr("class", "alert alert-success").text(message);
+          reloadPageAfter(2000);
+          redirectTo(`/article/${articleId}`);
+        } else {
+          $("#flash").attr("class", "alert alert-danger").text(message);
+        }
+      },
+      error: (error, xhr, message) => {
+        console.log(error, xhr, message);
+        $("#flash").attr("class", "alert alert-danger").text(message);
+      }
+    });
+  }
+
+  // add comment
+  $("#addCommentForm").submit((event) => {
+    event.preventDefault();
+    commentForm(event);
+  });
+
+  $("#updateCommentForm").submit((event) => {
+    event.preventDefault();
+    commentForm(event, "PUT");
+  });
 });

@@ -23,6 +23,12 @@ const {
   updateArticleProcessor
 } = require("../controllers/article");
 
+// comment controllers
+const {
+  addCommentProcessor,
+  updateCommentProcessor
+} = require("../controllers/comment");
+
 // ########################## SETTING PAGES ##########################
 // setting routes
 // TODO: Use camelCase in the url, for parameter and query
@@ -44,34 +50,28 @@ router.put("/setting/reset_password/:email", (req, res) => {
 });
 
 // ########################## COMMENT PAGES ##########################
-// comment routes
-router.post("/comment/:article_id", (req, res) => {
-  // TODO: add comment
-  return res.json({
-    index: 1
-  });
-});
+// comment routes: addCommentProcessor
+router.post("/comment/:articleId", authNoSessionRedirect, addCommentProcessor);
 
-router.delete("/comment/:comment_id", (req, res) => {
+router.delete("/comment/:commentId", (req, res) => {
   // TODO: delete comment by id and make sure the id is a uuid
   return res.json({
     index: 1
   });
 });
 
-router.get("/comment/:comment_id", (req, res) => {
+router.get("/comment/:commentId", (req, res) => {
   // TODO: read a comment by id
   return res.json({
     index: 1
   });
 });
 
-router.put("/comment/:comment_id", (req, res) => {
-  // TODO: update comment by id
-  return res.json({
-    index: 1
-  });
-});
+router.put(
+  "/comment/:commentId",
+  authNoSessionRedirect,
+  updateCommentProcessor
+);
 
 // ########################## ACCOUNT PAGES ##########################
 // signup routes: signupProcessor
@@ -119,7 +119,7 @@ router.post(
 );
 
 // ########################## CONTACT PAGE ##########################
-
+// contact route: contactMeProcessor
 router.post(
   "/contact",
   joiMiddleware(joiSchemas.contactMeRequestBody),

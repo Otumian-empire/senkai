@@ -105,9 +105,8 @@ router.get(
 
 // update comment page: updateCommentPageRenderer
 router.get(
-  "/comment/update/:comment_id",
+  "/comment/update/:commentId",
   authNoSessionRedirect,
-  authSessionThenSetSession,
   updateCommentPageRenderer
 );
 
