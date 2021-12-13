@@ -1,29 +1,37 @@
 const appName = require("../config/config").APP_NAME;
 const Comment = require("../schemas").Comment;
 
+const {
+  CREATED_SUCCESSFULLY,
+  AN_ERROR_OCCURRED,
+  UPDATE_SUCCESSFUL
+} = require("../utils/apiMessages");
+
 module.exports = {
   updateCommentPageRenderer: async (req, res) => {
-    const session = req.session.user;
-    const commentId = req.params.commentId;
-    const email = req.session.user.email;
+    try {
+      const session = req.session.user;
+      const commentId = req.params.commentId;
+      const email = req.session.user.email;
 
-    await Comment.findOne({ _id: commentId })
-      .then((comment) => {
-        if (comment.email === email) {
-          return res.render("update_comment", {
-            session,
-            comment,
-            appName
-          });
-        }
+      const comment = await Comment.findOne({ _id: commentId });
 
-        return res.redirect("/");
-      })
-      .catch(() => res.redirect("/"));
+      if (comment.email === email) {
+        return res.render("update_comment", {
+          session,
+          comment,
+          appName
+        });
+      }
+
+      return res.redirect("/");
+    } catch (err) {
+      return res.redirect("/");
+    }
   },
   updateCommentProcessor: async (req, res) => {
     let success = false;
-    let message = "An error occurred";
+    let message = AN_ERROR_OCCURRED;
     let articleId = 0;
 
     try {
@@ -44,7 +52,7 @@ module.exports = {
       oldComment.save((err) => {
         if (!err) {
           success = true;
-          message = "Comment added successfully";
+          message = UPDATE_SUCCESSFUL;
         }
 
         return res.json({ success, message, articleId });
@@ -55,7 +63,7 @@ module.exports = {
   },
   addCommentProcessor: async (req, res) => {
     let success = false;
-    let message = "An error occurred";
+    let message = AN_ERROR_OCCURRED;
     let articleId = 0;
 
     try {
@@ -71,7 +79,7 @@ module.exports = {
 
       if (commentAdded) {
         success = true;
-        message = "Comment updated successfully";
+        message = CREATED_SUCCESSFULLY;
       }
 
       return res.json({ success, message, articleId });

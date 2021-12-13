@@ -2,6 +2,12 @@ const appName = require("../config/config").APP_NAME;
 const Article = require("../schemas").Article;
 const Comment = require("../schemas").Comment;
 
+const {
+  CREATED_SUCCESSFULLY,
+  AN_ERROR_OCCURRED,
+  UPDATE_SUCCESSFUL
+} = require("../utils/apiMessages");
+
 module.exports = {
   indexPageRenderer: async (req, res) => {
     const session = req.authUser;
@@ -10,7 +16,9 @@ module.exports = {
     let articles = [];
 
     try {
-      articles = await Article.find().limit(5);
+      // TODO: return in descending order by date createdAt
+      // articles = await Article.find().limit(5);
+      articles = await Article.find().limit(20);
     } catch (err) {
       return res.redirect("/");
     }
@@ -28,7 +36,9 @@ module.exports = {
     let articles = [];
 
     try {
-      articles = await Article.find().limit(15).select("-content -updatedAt");
+      // TODO: apply pagination here, pagination
+      // articles = await Article.find().limit(15).select("-content -updatedAt");
+      articles = await Article.find().limit(20).select("-content -updatedAt");
     } catch (err) {
       return res.redirect("/");
     }
@@ -43,31 +53,31 @@ module.exports = {
     const session = req.session.user;
     return res.render("create_article", { session, appName });
   },
-  createArticleProcessor: (req, res) => {
-    // TODO: work on the publish field, it is set to True by default in schema
-    const { title, content } = req.body;
-    const email = req.session.user.email;
+  createArticleProcessor: async (req, res) => {
+    let success = false;
+    let message = AN_ERROR_OCCURRED;
 
-    // TODO: use base64 encode on article and title before inserting
-    // TODO: create a function in the utils folder for encoding and decoding
+    try {
+      // TODO: work on the publish field, it is set to True by default in schema
+      const { title, content } = req.body;
+      const email = req.session.user.email;
+      let articleId = 0;
 
-    Article.create({ title, content, email })
-      .then((article) => {
-        let success = false;
-        let message = "An error occurred while creating the article";
-        let articleId = "";
+      // TODO: use base64 encode on article and title before inserting
+      // TODO: create a function in the utils folder for encoding and decoding
 
-        if (article) {
-          success = true;
-          message = "article created successfully";
-          articleId = article._id;
-        }
+      const article = Article.create({ title, content, email });
 
-        return res.json({ success, message, articleId });
-      })
-      .catch(() => {
-        return res.json({ success: false, message: "An error ocurred" });
-      });
+      if (article) {
+        success = true;
+        message = CREATED_SUCCESSFULLY;
+        articleId = article._id;
+      }
+
+      return res.json({ success, message, articleId });
+    } catch (err) {
+      return res.json({ success, message });
+    }
   },
   readOneArticlePageRenderer: async (req, res) => {
     const session = req.authUser;
@@ -113,7 +123,7 @@ module.exports = {
   },
   updateArticleProcessor: async (req, res) => {
     let success = false;
-    let message = "An error occurred";
+    let message = AN_ERROR_OCCURRED;
 
     try {
       const articleId = req.params.articleId;
@@ -132,13 +142,12 @@ module.exports = {
       article.save((err) => {
         if (!err) {
           success = true;
-          message = "Update successful";
+          message = UPDATE_SUCCESSFUL;
         }
 
         return res.json({ success, message });
       });
     } catch (err) {
-      console.log(err);
       return res.json({ success, message });
     }
   }

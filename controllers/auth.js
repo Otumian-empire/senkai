@@ -10,7 +10,7 @@ module.exports = {
 
     return next();
   },
-  authSessionThenSetSession: (req, res, next) => {
+  authSessionThenSetSession: (req, _res, next) => {
     let session = defaultSession;
     const authUser = { ...req.session.user };
 

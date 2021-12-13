@@ -1,6 +1,11 @@
 const appName = require("../config/config").APP_NAME;
 const Contact = require("../schemas").Contact;
 
+const {
+  CONTACT_US_SUBMITTED,
+  AN_ERROR_OCCURRED
+} = require("../utils/apiMessages");
+
 module.exports = {
   aboutPageRenderer: (req, res) => {
     const session = req.authUser;
@@ -14,27 +19,27 @@ module.exports = {
 
     return res.render("contact", { session, appName });
   },
-  contactMeProcessor: (req, res) => {
-    const { fullName, email, subject, content } = req.body;
+  contactMeProcessor: async (req, res) => {
     let success = false;
-    let message = "An error occurred, please try again in a few seconds";
+    let message = AN_ERROR_OCCURRED;
 
-    Contact.create({
-      fullName,
-      email,
-      subject,
-      content
-    })
-      .then((contactMeInfo) => {
-        if (contactMeInfo) {
-          success = true;
-          message = "'Contact Us' is submitted";
-        }
+    try {
+      const { fullName, email, subject, content } = req.body;
 
-        return res.json({ success, message });
-      })
-      .catch(() => {
-        return res.json({ success, message });
+      const contactMeInfo = await Contact.create({
+        fullName,
+        email,
+        subject,
+        content
       });
+      if (contactMeInfo) {
+        success = true;
+        message = CONTACT_US_SUBMITTED;
+      }
+
+      return res.json({ success, message });
+    } catch (err) {
+      return res.json({ success, message });
+    }
   }
 };
