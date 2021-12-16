@@ -4,7 +4,8 @@ const Comment = require("../schemas").Comment;
 const {
   CREATED_SUCCESSFULLY,
   AN_ERROR_OCCURRED,
-  UPDATE_SUCCESSFUL
+  UPDATE_SUCCESSFUL,
+  DELETED_SUCCESSFULLY
 } = require("../utils/apiMessages");
 
 module.exports = {
@@ -83,6 +84,33 @@ module.exports = {
       }
 
       return res.json({ success, message, articleId });
+    } catch (err) {
+      return res.json({ success, message });
+    }
+  },
+  deleteCommentProcessor: async (req, res) => {
+    let success = false;
+    let message = AN_ERROR_OCCURRED;
+
+    try {
+      const commentId = req.params.commentId;
+      const email = req.session.user.email;
+
+      const comment = await Comment.findOne({
+        _id: commentId,
+        email
+      });
+
+      const articleId = comment.articleId;
+
+      comment.delete((err) => {
+        if (!err) {
+          success = true;
+          message = DELETED_SUCCESSFULLY;
+        }
+
+        return res.json({ success, message, articleId });
+      });
     } catch (err) {
       return res.json({ success, message });
     }

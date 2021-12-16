@@ -95,9 +95,9 @@
                           <!-- delete comment -->
                           <span
                             class='mr-2'>
-                            <a
-                              href='/comment/delete/<%= comment._id %>'
-                              class="btn btn-sm btn-danger">DELETE</a>
+                            <button
+                              class="btn btn-sm btn-danger delete-comment"
+                              data-id="<%= comment._id %>">DELETE</button>
                           </span>
                         </span>
                       <% } %>

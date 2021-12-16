@@ -7,5 +7,6 @@ module.exports = {
   AN_ERROR_OCCURRED: "An error occurred",
   CONTACT_US_SUBMITTED: "'Contact Us' is submitted",
   UPDATE_SUCCESSFUL: "Update successful",
-  CREATED_SUCCESSFULLY: "Created successful"
+  CREATED_SUCCESSFULLY: "Created successful",
+  DELETED_SUCCESSFULLY: "Deleted successful"
 };

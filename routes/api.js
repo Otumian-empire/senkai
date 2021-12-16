@@ -26,7 +26,8 @@ const {
 // comment controllers
 const {
   addCommentProcessor,
-  updateCommentProcessor
+  updateCommentProcessor,
+  deleteCommentProcessor
 } = require("../controllers/comment");
 
 // ########################## SETTING PAGES ##########################
@@ -53,19 +54,12 @@ router.put("/setting/reset_password/:email", (req, res) => {
 // comment routes: addCommentProcessor
 router.post("/comment/:articleId", authNoSessionRedirect, addCommentProcessor);
 
-router.delete("/comment/:commentId", (req, res) => {
-  // TODO: delete comment by id and make sure the id is a uuid
-  return res.json({
-    index: 1
-  });
-});
-
-router.get("/comment/:commentId", (req, res) => {
-  // TODO: read a comment by id
-  return res.json({
-    index: 1
-  });
-});
+// delete comment: deleteCommentProcessor
+router.delete(
+  "/comment/:commentId",
+  authNoSessionRedirect,
+  deleteCommentProcessor
+);
 
 router.put(
   "/comment/:commentId",

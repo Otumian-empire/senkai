@@ -3,7 +3,7 @@
 // sent with our jquery and not from outside by a user who has
 // logged in on the system
 
-$(document).ready(() => {
+jQuery(function ($) {
   // Submit form - login and signup
   function submitAccountForm(url = "", data = {}) {
     const method = "POST";
@@ -256,5 +256,33 @@ $(document).ready(() => {
   $("#updateCommentForm").submit((event) => {
     event.preventDefault();
     commentForm(event, "PUT");
+  });
+
+  $(".delete-comment").on("click", (e) => {
+    e.preventDefault();
+
+    const id = e.target.dataset.id;
+
+    if (id) {
+      $.ajax({
+        url: `/api/comment/${id}`,
+        method: "DELETE",
+        dataType: "json",
+        success: (response) => {
+          const { success, message, articleId } = response;
+
+          if (success) {
+            $("#flash").attr("class", "alert alert-success").text(message);
+            redirectTo(`/article/${articleId}`);
+          } else {
+            $("#flash").attr("class", "alert alert-danger").text(message);
+          }
+        },
+        error: (error, xhr, message) => {
+          console.log(error, xhr, message);
+          $("#flash").attr("class", "alert alert-danger").text(message);
+        }
+      });
+    }
   });
 });
