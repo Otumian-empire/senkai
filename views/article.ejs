@@ -17,9 +17,9 @@
             </span>
 
             <span class="mr-2">
-              <!-- TODO: provide the api route -->
-              <a href="/article/delete/<%= article._id %>"
-                class="btn btn-sm btn-danger">DELETE</a>
+              <button 
+                data-id="<%= article._id %>"
+                class="btn btn-sm btn-danger delete-article">DELETE</button>
             </span>
           <% } %>
 

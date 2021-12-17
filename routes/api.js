@@ -20,7 +20,8 @@ const { contactMeProcessor } = require("../controllers/common");
 // article controllers
 const {
   createArticleProcessor,
-  updateArticleProcessor
+  updateArticleProcessor,
+  deleteArticleProcessor
 } = require("../controllers/article");
 
 // comment controllers
@@ -32,8 +33,6 @@ const {
 
 // ########################## SETTING PAGES ##########################
 // setting routes
-// TODO: Use camelCase in the url, for parameter and query
-// update user profile fields: firstName, lastName, bio
 router.put(
   "/setting/:token/:fieldName",
   authNoSessionRedirect,
@@ -102,6 +101,13 @@ router.put(
   authNoSessionRedirect,
   joiMiddleware(joiSchemas.articleRequestBody),
   updateArticleProcessor
+);
+
+// delete article routes: deleteArticleProcessor
+router.delete(
+  "/article/:articleId",
+  authNoSessionRedirect,
+  deleteArticleProcessor
 );
 
 // create article: createArticleProcessor

@@ -285,4 +285,32 @@ jQuery(function ($) {
       });
     }
   });
+
+  $(".delete-article").on("click", (e) => {
+    e.preventDefault();
+
+    const id = e.target.dataset.id;
+
+    if (id) {
+      $.ajax({
+        url: `/api/article/${id}`,
+        method: "DELETE",
+        dataType: "json",
+        success: (response) => {
+          const { success, message } = response;
+
+          if (success) {
+            $("#flash").attr("class", "alert alert-success").text(message);
+            redirectTo('/article');
+          } else {
+            $("#flash").attr("class", "alert alert-danger").text(message);
+          }
+        },
+        error: (error, xhr, message) => {
+          console.log(error, xhr, message);
+          $("#flash").attr("class", "alert alert-danger").text(message);
+        }
+      });
+    }
+  });
 });

@@ -24,6 +24,7 @@ module.exports = {
       redirectUrl += `?email=${session.email}`;
     }
 
+    res.clearCookie("connect.sid");
     delete req.session;
 
     return res.redirect(redirectUrl);

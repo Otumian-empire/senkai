@@ -5,7 +5,8 @@ const Comment = require("../schemas").Comment;
 const {
   CREATED_SUCCESSFULLY,
   AN_ERROR_OCCURRED,
-  UPDATE_SUCCESSFUL
+  UPDATE_SUCCESSFUL,
+  DELETED_SUCCESSFULLY
 } = require("../utils/apiMessages");
 
 module.exports = {
@@ -143,6 +144,32 @@ module.exports = {
         if (!err) {
           success = true;
           message = UPDATE_SUCCESSFUL;
+        }
+
+        return res.json({ success, message });
+      });
+    } catch (err) {
+      return res.json({ success, message });
+    }
+  },
+  deleteArticleProcessor: async (req, res) => {
+    let success = false;
+    let message = AN_ERROR_OCCURRED;
+
+    try {
+      const articleId = req.params.articleId;
+      const email = req.session.user.email;
+
+      const article = await Article.findOne({ _id: articleId, email });
+
+      if (!article) {
+        return res.json({ success, message });
+      }
+
+      article.delete((err) => {
+        if (!err) {
+          success = true;
+          message = DELETED_SUCCESSFULLY;
         }
 
         return res.json({ success, message });
