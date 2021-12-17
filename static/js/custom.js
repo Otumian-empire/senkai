@@ -301,7 +301,7 @@ jQuery(function ($) {
 
           if (success) {
             $("#flash").attr("class", "alert alert-success").text(message);
-            redirectTo('/article');
+            redirectTo("/article");
           } else {
             $("#flash").attr("class", "alert alert-danger").text(message);
           }
