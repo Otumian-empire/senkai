@@ -104,7 +104,7 @@ jQuery(function ($) {
   }
 
   // Signup form submission
-  $("#signupForm").submit((e) => {
+  $("#signupForm").on("submit", (e) => {
     e.preventDefault();
 
     const url = "/api/account/signup";
@@ -129,7 +129,7 @@ jQuery(function ($) {
   });
 
   // Login form submission
-  $("#loginForm").submit((e) => {
+  $("#loginForm").on("submit", (e) => {
     e.preventDefault();
 
     const url = "/api/account/login";
@@ -143,7 +143,7 @@ jQuery(function ($) {
   });
 
   // Contact Me form submission
-  $("#contactMeForm").submit((e) => {
+  $("#contactMeForm").on("submit", (e) => {
     e.preventDefault();
 
     const url = "/api/contact";
@@ -184,35 +184,35 @@ jQuery(function ($) {
   });
 
   // update firstName
-  $("#firstNameUpdateForm").submit((e) => {
+  $("#firstNameUpdateForm").on("submit", (e) => {
     e.preventDefault();
 
     updateAccountFieldForm(e);
   });
 
   // update lastName
-  $("#lastNameUpdateForm").submit((e) => {
+  $("#lastNameUpdateForm").on("submit", (e) => {
     e.preventDefault();
 
     updateAccountFieldForm(e);
   });
 
   // update bio
-  $("#bioUpdateForm").submit((e) => {
+  $("#bioUpdateForm").on("submit", (e) => {
     e.preventDefault();
     updateAccountFieldForm(e);
   });
 
   // create article
   // TODO: when a check field is added, get the id and value of the check field
-  $("#createArticleForm").submit((event) => {
+  $("#createArticleForm").on("submit", (event) => {
     event.preventDefault();
     articleForm(event);
   });
 
   // update article
   // TODO: when a check field is added, get the id and value of the check field
-  $("#updateArticleForm").submit((event) => {
+  $("#updateArticleForm").on("submit", (event) => {
     event.preventDefault();
     const method = "PUT";
     articleForm(event, method);
@@ -248,12 +248,12 @@ jQuery(function ($) {
   }
 
   // add comment
-  $("#addCommentForm").submit((event) => {
+  $("#addCommentForm").on("submit", (event) => {
     event.preventDefault();
     commentForm(event);
   });
 
-  $("#updateCommentForm").submit((event) => {
+  $("#updateCommentForm").on("submit", (event) => {
     event.preventDefault();
     commentForm(event, "PUT");
   });
