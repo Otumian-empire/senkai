@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const tokenSchema = new mongoose.Schema(
   {
-    text: {
+    token: {
       type: String
     },
     dormancy: {
@@ -12,7 +12,7 @@ const tokenSchema = new mongoose.Schema(
     purpose: {
       type: String
     },
-    userEmail: {
+    email: {
       type: String,
       unique: true,
       required: true,

@@ -5,7 +5,9 @@ const {
   loginPageRenderer,
   logoutProcessor,
   signupPageRenderer,
-  userProfilePageRenderer
+  userProfilePageRenderer,
+  forgetPasswordRenderer,
+  passwordResetRenderer
 } = require("../controllers").accountController;
 
 // auth middleware
@@ -32,9 +34,6 @@ const { updateCommentPageRenderer } =
 const { aboutPageRenderer, contactPageRenderer } =
   require("../controllers").commonController;
 
-const appName = require("../config/config").APP_NAME;
-const defaultSession = require("../utils/constants").DEFAULT_SESSION;
-
 // ########################## COMMON PAGES ##########################
 // index page
 router.get("/", authSessionThenSetSession, indexPageRenderer);
@@ -50,22 +49,18 @@ router.get("/contact", authSessionThenSetSession, contactPageRenderer);
 router.get("/setting", authNoSessionRedirect, userProfilePageRenderer);
 
 // password reset page
-// TODO: implement the password reset functionality
-router.get("/setting/reset_password", (req, res) => {
-  return res.render("reset_password", {
-    session: defaultSession,
-    appName
-  });
-});
+router.get(
+  "/setting/reset_password",
+  authSessionRedirect,
+  passwordResetRenderer
+);
 
 // forget password page
-// TODO: implement the forget password functionality
-router.get("/setting/forget_password", (req, res) => {
-  return res.render("forget_password", {
-    session: defaultSession,
-    appName
-  });
-});
+router.get(
+  "/setting/forget_password",
+  authSessionRedirect,
+  forgetPasswordRenderer
+);
 
 // ########################## ACCOUNT PAGES ##########################
 // signup page: signupPageRenderer
@@ -78,10 +73,10 @@ router.get("/account/login", authSessionRedirect, loginPageRenderer);
 router.get("/account/logout", authNoSessionRedirect, logoutProcessor);
 
 // ########################## ARTICLE PAGES ##########################
-// article page: readManyArticleRenderer
 // TODO: read all articles, read 10 at a time, do it in the
 // articleCollectionController
 // TODO: look into reload on scroll functionality
+// article page: readManyArticleRenderer
 router.get("/article", authSessionThenSetSession, readManyArticleRenderer);
 
 // create article page: createArticlePageRenderer
@@ -95,7 +90,6 @@ router.get(
 );
 
 // update article page: updateArticlePageRenderer
-// TODO: read article by id and pass it to the said view
 router.get(
   "/article/update/:articleId",
   authNoSessionRedirect,

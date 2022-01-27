@@ -48,15 +48,11 @@ const schemas = {
     text: Joi.string().min(15).max(1286).trim().required(),
     userEmail: Joi.string().trim().email().required()
   }),
-  tokenRequestBody: Joi.object().keys({
-    text: Joi.string().alphanum().max(32).trim().required(),
-    // Purpose is either EMAIL || PASSD
-    purpose: Joi.string().length(5).trim().required(),
-    userEmail: Joi.string().trim().email().required()
-  }),
   passwordResetRequestBody: Joi.object().keys({
-    userEmail: Joi.string().trim().email().required(),
-    newPassword: JoiPassword.string()
+    token: Joi.string().alphanum().length(6).trim().required(),
+    purpose: Joi.string().length(5).trim().required(),
+    email: Joi.string().trim().email().required(),
+    password: JoiPassword.string()
       .min(8)
       .trim()
       .minOfSpecialCharacters(1)
@@ -67,7 +63,7 @@ const schemas = {
       .required()
   }),
   forgetPasswordRequestBody: Joi.object().keys({
-    userEmail: Joi.string().trim().email().required()
+    email: Joi.string().trim().email().required()
   }),
   contactMeRequestBody: Joi.object().keys({
     fullName: Joi.string().min(2).max(42).trim().required(),

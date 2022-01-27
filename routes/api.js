@@ -11,7 +11,9 @@ const { authSessionRedirect, authNoSessionRedirect } =
 const {
   signupProcessor,
   loginProcessor,
-  userProfileFieldUpdateProcessor
+  userProfileFieldUpdateProcessor,
+  forgetPasswordProcessor,
+  passwordResetProcessor
 } = require("../controllers/account");
 
 // common controllers
@@ -41,13 +43,20 @@ router.put(
   userProfileFieldUpdateProcessor
 );
 
-router.put("/setting/reset_password/:email", (req, res) => {
-  // TODO: implement the password reset functionality
+// forget password
+router.post(
+  "/setting/forget_password",
+  authSessionRedirect,
+  joiMiddleware(joiSchemas.forgetPasswordRequestBody),
+  forgetPasswordProcessor
+);
 
-  return res.json({
-    index: "reset_password"
-  });
-});
+// reset password
+router.post(
+  "/setting/reset_password",
+  joiMiddleware(joiSchemas.passwordResetRequestBody),
+  passwordResetProcessor
+);
 
 // ########################## COMMENT PAGES ##########################
 // comment routes: addCommentProcessor
@@ -60,6 +69,7 @@ router.delete(
   deleteCommentProcessor
 );
 
+// update comment: updateCommentProcessor
 router.put(
   "/comment/:commentId",
   authNoSessionRedirect,

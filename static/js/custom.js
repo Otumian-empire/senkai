@@ -313,4 +313,72 @@ jQuery(function ($) {
       });
     }
   });
+
+  // forget password form - get user email
+  $("#forgetPasswordForm").on("submit", (event) => {
+    event.preventDefault();
+
+    const email = event.target.email.value.trim().toLocaleLowerCase();
+
+    const url = "/api/setting/forget_password";
+    const method = "POST";
+
+    $.ajax({
+      url,
+      method,
+      data: { email },
+      dataType: "json",
+      success: (response) => {
+        const { success, message } = response;
+
+        if (success) {
+          redirectTo(`/setting/reset_password?email=${email}`);
+        } else {
+          $("#flash").attr("class", "alert alert-danger").text(message);
+        }
+      },
+      error: (error, xhr, message) => {
+        console.log(error, xhr, message);
+        $("#flash").attr("class", "alert alert-danger").text(message);
+      }
+    });
+  });
+
+  // password set form - get token and new password
+  $("#passwordResetForm").on("submit", (event) => {
+    event.preventDefault();
+
+    const urlQueryString = new URLSearchParams(location.search);
+
+    const email = urlQueryString.has("email")
+      ? urlQueryString.get("email").toLocaleLowerCase()
+      : "";
+
+    const password = event.target.password.value;
+    const token = event.target.token.value;
+    const purpose = "PASSD";
+
+    const url = "/api/setting/reset_password";
+    const method = "POST";
+
+    $.ajax({
+      url,
+      method,
+      data: { token, purpose, email, password },
+      dataType: "json",
+      success: (response) => {
+        const { success, message } = response;
+
+        if (success) {
+          redirectTo("/account/login");
+        } else {
+          $("#flash").attr("class", "alert alert-danger").text(message);
+        }
+      },
+      error: (error, xhr, message) => {
+        console.log(error, xhr, message);
+        $("#flash").attr("class", "alert alert-danger").text(message);
+      }
+    });
+  });
 });
